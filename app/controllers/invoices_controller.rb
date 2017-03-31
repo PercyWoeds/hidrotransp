@@ -1,4 +1,5 @@
 class InvoicesController < ApplicationController
+    
     before_action :authenticate_user!
 
 	def index             
@@ -21,7 +22,7 @@ class InvoicesController < ApplicationController
             @invoices=Invoice.find_by_sql(['Select invoices.*,clients.vrazon2,mailings.flag1 from invoices 
             LEFT JOIN mailings ON invoices.numero = mailings.numero
             LEFT JOIN clients ON invoices.cliente = clients.vcodigo            
-            order by numero  where invoices.numero like ?  or clients.vrazon2 like ?',params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])
+             where invoices.numero like ?  or clients.vrazon2 like ?',params[:search], "%"+ params[:search]+"%"]).paginate(:page => params[:page])
         end        
     end
 
