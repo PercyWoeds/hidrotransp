@@ -262,7 +262,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
         else
           
-          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"          
+          $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"          
         end
 
 
@@ -348,7 +348,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
         else
           
-          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"          
+          $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"          
         end
 
 
