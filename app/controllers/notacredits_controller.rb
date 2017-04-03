@@ -338,7 +338,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
         if debit_note.valid?
             debit_note.to_pdf
-            File::open("credit_note.xml", "w") { |file| file.write(credit_note.to_xml) }
+            File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
             $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
             $lcFile2     = File.expand_path('../../../../', __FILE__)+ "/"+$lcFilezip
 
