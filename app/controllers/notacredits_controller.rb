@@ -322,10 +322,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         else
           $aviso =  "Invalid document, ignoring output: #{credit_note.errors.messages}"
         end
-        
-        
+                
       else
-        
 
           debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: $lcNumeroNota, customer: {legal_name:$lcLegalName , ruc:$lcRuc },
                      billing_reference: {id: $lcBillingReference, document_type_code: "01"},
@@ -340,8 +338,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         if debit_note.valid?
             debit_note.to_pdf
             File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
-            $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-            $lcFile2     = File.expand_path('../../../../', __FILE__)+ "/"+$lcFilezip
+            $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+            $lcFile2     = File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
 
             ActionCorreo.bienvenido_email(@invoice).deliver    
             @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
