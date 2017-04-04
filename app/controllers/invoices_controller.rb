@@ -1,4 +1,9 @@
 class InvoicesController < ApplicationController
+
+    $: << Dir.pwd + '/lib'
+    require 'pry'
+    require 'peru_sunat_ruc'
+
     
     before_action :authenticate_user!
 
@@ -48,8 +53,16 @@ class InvoicesController < ApplicationController
         $lcMail         = @list[0].mailclient
         $lcMail2        = @list[0].mailclient2
         $lcMail3        = @list[0].mailclient3
-        $lcLegalName    = @list[0].vrazon2    
-        $lcDirCli       = @list[0].vdireccion   
+
+        ruc_number = $lcRuc 
+
+        result  = PeruSunatRuc.name_from ruc_number
+        result2 = PeruSunatRuc.address_from ruc_number
+
+        $lcLegalName    = result
+
+        $lcDirCli       = result2.gsub(/\s+/," ").strip 
+
         $lcDisCli       = @list[0].vdistrito
         $lcProv         = @list[0].vprov
         $lcDep          = @list[0].vdep
