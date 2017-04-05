@@ -37,9 +37,9 @@ class NotacreditsController < ApplicationController
         $lcRuc          = @invoice.client.vruc    
         
         if @invoice.nota_id == 1
-            $lcTd           = "NC"
+            $lcTd           = 1
         else
-            $lcTd           = "ND"
+            $lcTd           = 2
         end  
         
 
@@ -222,6 +222,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         files_to_clean.each do |file|
           File.delete(file)
         end         
+
       if $lcTd == 1        
         credit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: $lcNumeroNota, customer: {legal_name:$lcLegalName , ruc:$lcRuc },
                              billing_reference: {id: $lcBillingReference, document_type_code: "01"},
@@ -229,7 +230,6 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
                              lines: [{id: "1", item: {id: "05", description: "DIESEL B5 S-50"}, quantity: $lcCantidad, unit: 'GLL', 
                                   price: {value: $lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
                              additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
-
         
 
         credit_note = SUNAT::CreditNote.new(credit_note_data)
@@ -260,8 +260,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             debit_note.to_pdf
             $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
             send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
-        else
-          
+        else          
           $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"          
         end
 
