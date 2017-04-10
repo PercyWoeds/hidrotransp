@@ -86,12 +86,12 @@ class InvoicesController < ApplicationController
 
         #@clienteName1   = Client.where("vcodigo = ?",params[ :$lcClienteInv ])        
         $lcClienteName = ""
-        if @invoice.description == nil
+        if @invoice.nombre  == nil
             $lcDes1 = ""
 
         else
         
-           $lcDes1 = @invoice.description 
+           $lcDes1 = @invoice.nombre 
         
         end 
 
