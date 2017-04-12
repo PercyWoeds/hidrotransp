@@ -14,8 +14,7 @@ class ClientsController < ApplicationController
 
   def index
       
-
-  @clients = Client.all.order(:vrazon2)
+   @clients = Client.all.order(:vrazon2).paginate(page: params[:page])
 
     respond_to do |format|
     format.html
@@ -24,8 +23,7 @@ class ClientsController < ApplicationController
 
 
   if params[:search]
-
-      @clients = Client.search(params[:search]).order(:vrazon2).order('vrazon2').paginate(:page => params[:page]) 
+    @clients = Client.search(params[:search]).order(:vrazon2).order('vrazon2').paginate(:page => params[:page]) 
   else
     @clients = Client.all.order(:vrazon2).order('vrazon2').paginate(:page => params[:page]) 
   end
