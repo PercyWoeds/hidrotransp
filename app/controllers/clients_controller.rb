@@ -17,6 +17,12 @@ class ClientsController < ApplicationController
 
   @clients = Client.all.order(:vrazon2)
 
+    respond_to do |format|
+    format.html
+    format.csv { send_data @clients.to_csv }    
+    end
+
+
   if params[:search]
 
       @clients = Client.search(params[:search]).order(:vrazon2).order('vrazon2').paginate(:page => params[:page]) 
@@ -88,7 +94,7 @@ class ClientsController < ApplicationController
   def destroy
     @client.destroy
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
+        format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
