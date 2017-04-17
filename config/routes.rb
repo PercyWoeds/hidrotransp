@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
    resources :voideds do
     collection { post :anular }  
+    collection { post :anular2 }  
    end 
 
    get '/about', to: 'layouts#about'
