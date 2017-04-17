@@ -312,13 +312,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
           
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-          $lcFile2     = File.expand_path('../../../../../', __FILE__)+ "/"+$lcFilezip
+          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
 
  #         $lcFile2     = File.expand_path('../../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
-
-          ActionCorreo.bienvenido_email(@invoice).deliver    
-          @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-          @mailing.save      
+        send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
+        @@document_serial_id =""
+        $aviso=""
         else
           $aviso =  "Invalid document, ignoring output: #{credit_note.errors.messages}"
         end
@@ -339,12 +338,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             debit_note.to_pdf
             File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
             $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-            $lcFile2     = File.expand_path('../../', __FILE__)+ "/"+$lcFilezip
+            $lcFile2     = File.expand_path('../../../', __FILE__)+"/debit_note.xml"
 
-            ActionCorreo.bienvenido_email(@invoice).deliver    
-            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-            @mailing.save      
-
+        send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
+        @@document_serial_id =""
+        $aviso=""
+        
         else
           
           $aviso = "Invalid document, ignoring output: #{debit_note.errors.messages}"          
@@ -395,7 +394,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
           
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-          $lcFile2     = File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
+            
+          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
 
           #$lcFile2     = File.expand_path('../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
 
@@ -422,7 +422,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             debit_note.to_pdf
             File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
             $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-            $lcFile2     = File.expand_path('../../', __FILE__)+ "/"+$lcFilezip
+              $lcFile2     = File.expand_path('../../../', __FILE__)+"/debit_note.xml"
 
             ActionCorreo.bienvenido_email(@invoice).deliver    
             @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
