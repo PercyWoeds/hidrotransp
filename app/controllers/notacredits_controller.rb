@@ -72,7 +72,7 @@ class NotacreditsController < ApplicationController
         #@clienteName1   = Client.where("vcodigo = ?",params[ :$lcClienteInv ])        
         $lcClienteName =  ""
         $lcDescrip      = @invoice.notum.descrip 
-        $lcDescrip2     = @invoice.descrip 
+        $lcDescrip2     = @invoice.nombre 
         #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
         $lcGuiaRemision =""
         $lcPlaca =""
