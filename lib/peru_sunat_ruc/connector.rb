@@ -21,10 +21,24 @@ class PeruSunatRuc::Connector
     if page.body.to_s.include? 'ero y volver a ingresar.'
       raise 'Número de RUC Invalido'
     end
+  #name: page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip,
+
+    a = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').first.strip
+    b = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').second.strip
+    c = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip
+
+    if b == c 
+        nombre = b 
+    else
+        nombre = b <<" - " << c
+    end 
+
+
 
     PeruSunatRuc::Company.new({
+                
       ruc_number: page.at('/html/body/table[1]/tr[1]/td[2]').text,
-      name: page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip,
+      name: nombre ,
       address: page.at('/html/body/table[1]/tr[7]/td[2]').text,
       taxpayer_type: page.at('/html/body/table[1]/tr[2]/td[2]').text,
       taxpayer_status: page.at('/html/body/table[1]/tr[4]/td[2]').text,
