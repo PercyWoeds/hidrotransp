@@ -79,6 +79,8 @@
         voided.numero=Voided.find(1).numero.to_i + 1
         lcnumero=voided.numero.to_s
         Voided.where(:id=>'1').update_all(:numero =>lcnumero)
+
+        
         
     end     
 
