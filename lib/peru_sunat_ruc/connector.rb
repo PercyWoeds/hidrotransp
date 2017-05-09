@@ -34,12 +34,17 @@ class PeruSunatRuc::Connector
     end 
 
 
+    nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
+
+    if nombre1 == "HABIDO"
+      nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip      
+    end 
 
     PeruSunatRuc::Company.new({
                 
       ruc_number: page.at('/html/body/table[1]/tr[1]/td[2]').text,
-      name: nombre ,
-      address: page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip,
+      name: nombre ,      
+      address: nombre1,
       taxpayer_type: page.at('/html/body/table[1]/tr[2]/td[2]').text,
       taxpayer_status: page.at('/html/body/table[1]/tr[4]/td[2]').text,
       taxpayer_condition: page.at('/html/body/table[1]/tr[6]/td[2]').text.scan(/[A-Z][a-z]*\w+/),
