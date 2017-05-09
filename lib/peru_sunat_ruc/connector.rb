@@ -24,7 +24,7 @@ class PeruSunatRuc::Connector
   #name: page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip,
 
     a = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').first.strip
-    b = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').second.strip
+    b = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip
     c = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip
 
     if b == c 
@@ -39,7 +39,7 @@ class PeruSunatRuc::Connector
                 
       ruc_number: page.at('/html/body/table[1]/tr[1]/td[2]').text,
       name: nombre ,
-      address: page.at('/html/body/table[1]/tr[7]/td[2]').text,
+      address: page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip,
       taxpayer_type: page.at('/html/body/table[1]/tr[2]/td[2]').text,
       taxpayer_status: page.at('/html/body/table[1]/tr[4]/td[2]').text,
       taxpayer_condition: page.at('/html/body/table[1]/tr[6]/td[2]').text.scan(/[A-Z][a-z]*\w+/),

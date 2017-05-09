@@ -88,14 +88,9 @@ class InvoicesController < ApplicationController
         $lcClienteName = ""
         if @invoice.nombre  == nil
             $lcDes1 = ""
-
-        else
-        
-           $lcDes1 = @invoice.nombre 
-        
-        end 
-
-    
+        else        
+           $lcDes1 = @invoice.nombre         
+        end     
         #$lcGuiaRemision ="NRO.CUENTA BBVA BANCO CONTINENTAL : 0244-0100023293"
         $lcGuiaRemision =@invoice.guia     
         $lcPlaca =@invoice.codplaca10
