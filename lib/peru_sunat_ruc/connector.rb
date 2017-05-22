@@ -23,22 +23,31 @@ class PeruSunatRuc::Connector
     end
   #name: page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip,
 
-    a = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').first.strip
-    b = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip
-    c = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-').last.strip
 
+    aa = page.at('/html/body/table[1]/tr[1]/td[2]').text.split('-')
+
+    a = aa[0]
+    b = aa[1]
+    c = aa[2]
+    
+    nombre1 = "" 
     if b == c 
         nombre = b 
     else
+        if c != nil 
         nombre = b <<" - " << c
+         nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
+        else
+        nombre = b   
+        nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip   
+        end 
+
     end 
 
+     
 
-      nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
-    if nombre1 == "HABIDO"
-      nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip
-    end 
 
+    
     PeruSunatRuc::Company.new({
                 
       ruc_number: page.at('/html/body/table[1]/tr[1]/td[2]').text,
