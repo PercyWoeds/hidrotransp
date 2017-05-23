@@ -39,12 +39,10 @@ class PeruSunatRuc::Connector
          nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
         else
         nombre = b   
-        nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip   
+        nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip   
         end 
 
-    end 
-
-     
+    end      
 
 
     
