@@ -12,7 +12,7 @@ SUNAT.configure do |config|
   config.signature do |s|
     s.party_id    = "20522012336"
     s.party_name  = "HIDROTRANSP S.A.C."
-    s.cert_file   = File.join(Dir.pwd, './app/keys', 'certificado2.crt')
+    s.cert_file   = File.join(Dir.pwd, './app/keys', 'CESAR JAIME MANRIQUE MILLA.crt')
     s.pk_file     = File.join(Dir.pwd, './app/keys', 'sunat-private.key') 
   end
 
