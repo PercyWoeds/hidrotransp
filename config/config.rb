@@ -21,7 +21,8 @@ SUNAT.configure do |config|
     s.name       = "Cesar Jaime Manrique Milla"
     s.ruc        = "20522012336"
     s.address_id = "150132"
-    s.street     = "CAM.SECTOR CRUZ DEL NORTE I ZONA BAJA MZA. C LOTE. 5 A.H. PROYECTO INTEGRAL ALIANZA INDUSTRIAL DE LAS LOMAS"
+    s.street     = "CAM.SECTOR CRUZ DEL NORTE I ZONA BAJA MZA. C LOTE. 5 
+    A.H. PROYECTO INTEGRAL ALIANZA INDUSTRIAL DE LAS LOMAS"
     s.district   = "CARABAYLLO"
     s.city       = "LIMA"
     s.country    = "PE"
