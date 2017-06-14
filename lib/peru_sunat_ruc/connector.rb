@@ -34,12 +34,23 @@ class PeruSunatRuc::Connector
     if b == c 
         nombre = b 
     else
+      
         if c != nil 
-        nombre = b <<" - " << c
-         nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
+            nombre = b <<" - " << c
+            nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
+            
+            if nombre1 =='HABIDO'
+              nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip
+            end
+
         else
-        nombre = b   
-        nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip   
+            nombre = b   
+            nombre1 = page.at('/html/body/table[1]/tr[7]/td[2]').text.gsub(/\s+/, " ").strip
+            
+            if nombre1 =='HABIDO'
+              nombre1 = page.at('/html/body/table[1]/tr[8]/td[2]').text.gsub(/\s+/, " ").strip
+            end
+
         end 
 
     end      

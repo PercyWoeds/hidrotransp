@@ -2,10 +2,10 @@
     $: << Dir.pwd + '/lib'
 
     require 'pry'
-    require '/home/percy/sunat-ruby9/lib/peru_sunat_ruc'
+    require 'peru_sunat_ruc'
     
 
-	ruc_number = "20559912353"
+	ruc_number = "20424092941"
 
     result  = PeruSunatRuc.name_from ruc_number
     result2 = PeruSunatRuc.address_from ruc_number
