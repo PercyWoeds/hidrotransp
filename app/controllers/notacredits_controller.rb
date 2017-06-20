@@ -386,19 +386,19 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
                                   price: {value: $lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
                              additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
         
+        
         credit_note = SUNAT::CreditNote.new(credit_note_data)
         
         if credit_note.valid?          
           credit_note.to_pdf
-          File::open("credit_note.xml", "w") { |file| file.write(credit_note.to_xml) }
-
           
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
+          $lcFile2     = File.expand_path('../../../', __FILE__)+$lcFilezip
+            File::open("#{$lcFile2}", "w") { |file| file.write(credit_note.to_xml) }
             
-          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
-
           #$lcFile2     = File.expand_path('../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
-          ActionCorreo.bienvenido_email(@notacredit).deliver   
+          ActionCorreo.bienvenido_email(@notacredit).deliver
+          
           @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
           @mailing.save      
         else
