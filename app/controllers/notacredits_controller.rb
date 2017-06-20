@@ -399,7 +399,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
           #$lcFile2     = File.expand_path('../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
           ActionCorreo.bienvenido_email(@notacredit).deliver   
-          @mailing = Mailing.new(:td =>$lcTd, :iiserie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+          @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
           @mailing.save      
         else
           $aviso =  "Invalid document, ignoring output: #{credit_note.errors.messages}"
