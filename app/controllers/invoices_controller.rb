@@ -174,9 +174,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         else
             case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv2(true)
         end 
-
+        puts $lcFileName
+        
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-                
+        
+        puts $lcFileName1
+        
         send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
 
         
