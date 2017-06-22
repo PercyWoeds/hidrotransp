@@ -48,6 +48,8 @@ class InvoicesController < ApplicationController
         $lcCantidad     = @invoice.cantidad   
         $lcClienteInv   = @invoice.cliente   
         $lcRuc          = @list[0].ruc
+        $lcMoneda       = @invoice.moneda 
+        
         
         $lcTd           = @list[0].td 
         $lcMail         = @list[0].mailclient
@@ -134,7 +136,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         files_to_clean.each do |file|
           File.delete(file)
         end 
-
+        
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv(true)
 
         $lcGuiaRemision =""      
@@ -164,7 +166,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           File.delete(file)
         end         
         
-        case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv2(true)
+        
+        if $lcMoneda == "D"
+            
+        else
+            case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv2(true)
+        end 
 
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
                 
@@ -239,9 +246,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           File.delete(file)
         end         
         
-        case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
-        $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
-    
+        if $lcMoneda == "D"
+             case_49 = InvoiceGenerator.new(7, 49, 5, "FF50").with_different_currency
+        else
+            case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
+            $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
+        end
         send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
         @@document_serial_id =""
         $aviso=""

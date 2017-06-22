@@ -61,6 +61,16 @@
               <%= invoice.fecha %>
             </td>
             <td class="bordered_right bordered_bottom">
+              <%= if invoice.moneda  == "D"%>
+              "USD"
+              <%else %>
+              "S/."
+              <%end %>
+              
+            </td>
+            
+            
+            <td class="bordered_right bordered_bottom">
               <%= invoice.td %>
             </td>
             <td class="bordered_right bordered_bottom right">
@@ -71,14 +81,14 @@
             </td>
             
             <td class="bordered_right bordered_bottom right">
-              S/.<%= money(invoice.preciocigv) %>
+             <%= money(invoice.preciocigv) %>
             </td>
             <td class="bordered_right bordered_bottom right">
               <%= money(invoice.cantidad) %>
             </td>            
             
             <td class="bordered_right bordered_bottom right">
-              S/.<%= money(invoice.importe) %>
+            .<%= money(invoice.importe) %>
             </td>
             <td class="bordered_right bordered_bottom right">
             <% if invoice.flag1 != nil && invoice.flag1 != ""  %>          
