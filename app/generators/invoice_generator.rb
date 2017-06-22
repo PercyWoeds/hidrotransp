@@ -102,10 +102,17 @@ class InvoiceGenerator < DocumentGenerator
   end
 
   def with_different_currency(pdf=false)
-    invoice = document_class.new(data(@items, 'USD'))
+    invoice = document_class.new(data(@items, 'US'))
     generate_documents(invoice, pdf)
     invoice
   end
+  
+  def with_different_currency2(pdf=false)
+    invoice = document_class.new(data(@items, 'US'))
+    generate_documents4(invoice, pdf)
+    invoice
+  end
+  
   
   protected
 
