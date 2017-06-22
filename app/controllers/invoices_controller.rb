@@ -168,7 +168,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         
         if $lcMoneda == "D"
-            
+               case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency
         else
             case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv2(true)
         end 
@@ -204,15 +204,22 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           File.delete(file)
         end 
 
-        
+        if lcMoneda=='D'
+            
+        case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency
+        else
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
-        
+        end     
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
         $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
         
         ActionCorreo.bienvenido_email(@invoice).deliver
-    
-        @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        
+        if lcMoneda=="D"
+            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF02', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        else    
+            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+        end 
         @mailing.save
         $lcGuiaRemision =""
              
@@ -247,7 +254,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         end         
         
         if $lcMoneda == "D"
-             case_49 = InvoiceGenerator.new(7, 49, 5, "FF50").with_different_currency
+             case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency
         else
             case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
             $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
