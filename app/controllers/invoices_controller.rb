@@ -209,7 +209,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           File.delete(file)
         end 
 
-        if lcMoneda=='D'
+        if $lcMoneda=='D'
             
         case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency2
         else
