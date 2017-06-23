@@ -220,7 +220,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         ActionCorreo.bienvenido_email(@invoice).deliver
         
-        if lcMoneda=="D"
+        
+        if $lcMoneda=="D"
             @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF02', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
         else    
             @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
