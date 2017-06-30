@@ -234,14 +234,16 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
 
         credit_note = SUNAT::CreditNote.new(credit_note_data)
-      
-               
-       if credit_note.valid? 
+
+        if credit_note.valid?                       
            credit_note.to_pdf
            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
-           send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+          send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+
         else
+          
           $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+
         end
 
       else
@@ -305,18 +307,18 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         credit_note = SUNAT::CreditNote.new(credit_note_data)
         
-        
         if credit_note.valid?          
           credit_note.to_pdf
+          File::open("credit_note.xml", "w") { |file| file.write(credit_note.to_xml) }
+
           
-          File::open("{#$lcFileName}", "w") { |file| file.write(credit_note.to_xml) }
-
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-          $lcFile2     = File.expand_path('../../../', __FILE__)+"/"+$lcFilezip
+          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
 
-          send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
-          @@document_serial_id =""
-          $aviso=""
+ #         $lcFile2     = File.expand_path('../../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
+        send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
+        @@document_serial_id =""
+        $aviso=""
         else
           $aviso =  "Invalid document, ignoring output: #{credit_note.errors.messages}"
         end
@@ -337,7 +339,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             debit_note.to_pdf
             File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
             $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-            $lcFile2     = File.expand_path('../../../', __FILE__)+"/"+$lcFilezip
+            $lcFile2     = File.expand_path('../../../', __FILE__)+"/debit_note.xml"
 
         send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
         @@document_serial_id =""
@@ -384,19 +386,20 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
                                   price: {value: $lcPrecioSIgv}, pricing_reference: $lcPrecioCigv, tax_totals: [{amount: $lcIgv, type: :igv, code: "10"}], line_extension_amount:$lcVVenta }],
                              additional_monetary_totals: [{id: "1001", payable_amount: $lcVVenta}], tax_totals: [{amount: $lcIgv, type: :igv}], legal_monetary_total: $lcTotal}
         
-        
         credit_note = SUNAT::CreditNote.new(credit_note_data)
         
         if credit_note.valid?          
           credit_note.to_pdf
+          File::open("credit_note.xml", "w") { |file| file.write(credit_note.to_xml) }
+
           
-          $lcFileName1 = File.expand_path('../../../../', __FILE__)+$lcFileName        
-          $lcFile2     = File.expand_path('../../../', __FILE__)+$lcFilezip
-          File::open("#{$lcFile2}", "w") { |file| file.write(credit_note.to_xml) }
+          $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
             
+          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
+
           #$lcFile2     = File.expand_path('../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
-          ActionCorreo.bienvenido_email(@notacredit).deliver
-          
+
+          ActionCorreo.bienvenido_email(@invoice).deliver    
           @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
           @mailing.save      
         else
