@@ -42,6 +42,7 @@ files_to_clean.each do |file|
 end
 
 credit_note = SUNAT::CreditNote.new(credit_note_data)
+
 if credit_note.valid?
 	begin
 	credit_note.deliver!		
