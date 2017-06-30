@@ -248,6 +248,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         require './app/generators/receipt_generator'
         require './app/generators/daily_receipt_summary_generator'
         require './app/generators/voided_documents_generator'
+        
+        
 
         SUNAT.environment = :production
         files_to_clean = Dir.glob("*.xml") + Dir.glob("./app/pdf_output/*.pdf") + Dir.glob("*.zip")
