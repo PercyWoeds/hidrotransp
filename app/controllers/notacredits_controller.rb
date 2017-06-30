@@ -234,17 +234,22 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
 
         credit_note = SUNAT::CreditNote.new(credit_note_data)
+        generate_documents(credit_note,pdf)
+        credit_note
+        
 
-        if credit_note.valid?                       
-           credit_note.to_pdf
+    #    if credit_note.valid?                       
+     #      credit_note.to_pdf
+           
            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName              
+           
           send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
 
-        else
+      #  else
           
-          $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
+       #   $aviso = "Invalid document, ignoring output: #{credit_note.errors.messages}"
 
-        end
+#        end
 
       else
           debit_note_data = { issue_date: Date.new($aa,$mm,$dd), id: $lcNumeroNota, customer: {legal_name:$lcLegalName , ruc:$lcRuc },
@@ -307,8 +312,10 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         credit_note = SUNAT::CreditNote.new(credit_note_data)
         
+        
         if credit_note.valid?          
           credit_note.to_pdf
+          
           File::open("{#$lcFileName}", "w") { |file| file.write(credit_note.to_xml) }
 
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        

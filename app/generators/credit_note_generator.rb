@@ -66,9 +66,12 @@ class CreditNoteGenerator < DocumentGenerator
                         legal_monetary_total: {value: legal_monetary_total, currency: associated_document.document_currency_code}}
 
 
+
     @@document_serial_id += 1
-    credit_note_data  
+    credit_note_data
     
+    puts "name file"
+    puts $lcFileName 
 if credit_note.valid?
   File::open("#{$lcFileName}", "w") { |file| file.write(credit_note.to_xml) }
   credit_note.to_pdf
