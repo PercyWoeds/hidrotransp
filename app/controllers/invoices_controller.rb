@@ -116,11 +116,8 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
     end
 
     def sendsunat
-       
-    
         lib = File.expand_path('../../../lib', __FILE__)
         $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
         require 'sunat'
         require './config/config'
         require './app/generators/invoice_generator'
@@ -211,7 +208,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
 
         if $lcMoneda=='D'
             
-        case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency2
+        case_49 = InvoiceGenerator.new(7, 49, 5,$lg_serie_factura).with_different_currency2
         else
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
         end     
@@ -222,9 +219,9 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         
         if $lcMoneda=="D"
-            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF02', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+            @mailing = Mailing.new(:td =>$lcTd, :serie => $lg_serie_factura, :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
         else    
-            @mailing = Mailing.new(:td =>$lcTd, :serie => 'FF01', :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
+            @mailing = Mailing.new(:td =>$lcTd, :serie => $lg_serie_factura, :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
         end 
         @mailing.save
         $lcGuiaRemision =""
@@ -260,11 +257,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         end         
         
         if $lcMoneda == "D"
-             case_49 = InvoiceGenerator.new(7, 49, 5, "FF02").with_different_currency2
+             case_49 = InvoiceGenerator.new(7, 49, 5,$lg_serie_factura).with_different_currency2
         else
             case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
             $lcFile2 =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip    
         end
+        
         send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
         @@document_serial_id =""
         $aviso=""

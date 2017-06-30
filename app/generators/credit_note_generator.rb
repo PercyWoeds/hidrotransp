@@ -70,7 +70,7 @@ class CreditNoteGenerator < DocumentGenerator
     credit_note_data  
     
 if credit_note.valid?
-  File::open("#{$lcFileName}", "w") { |file| file.write(credit_note.to_xml) }
+  File::open("#{$lcFileName1}", "w") { |file| file.write(credit_note.to_xml) }
   credit_note.to_pdf
 else
   puts "Invalid document, ignoring output: #{credit_note.errors.messages}"

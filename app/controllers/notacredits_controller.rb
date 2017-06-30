@@ -309,13 +309,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         
         if credit_note.valid?          
           credit_note.to_pdf
-          File::open("credit_note.xml", "w") { |file| file.write(credit_note.to_xml) }
+          File::open("{#$lcFileName}", "w") { |file| file.write(credit_note.to_xml) }
 
           
           $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
-          $lcFile2     = File.expand_path('../../../', __FILE__)+"/credit_note.xml"
+          $lcFile2     = File.expand_path('../../../', __FILE__)+"/"+$lcFilezip
 
- #         $lcFile2     = File.expand_path('../../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
         send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
         @@document_serial_id =""
         $aviso=""
@@ -339,7 +338,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             debit_note.to_pdf
             File::open("debit_note.xml", "w") { |file| file.write(debit_note.to_xml) }
             $lcFileName1 = File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
-            $lcFile2     = File.expand_path('../../../', __FILE__)+"/debit_note.xml"
+            $lcFile2     = File.expand_path('../../../', __FILE__)+"/"+$lcFilezip
 
         send_file("#{$lcFile2}",:type =>'application/zip', :disposition => 'inline') 
         @@document_serial_id =""
@@ -394,7 +393,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           
           $lcFileName1 = File.expand_path('../../../../', __FILE__)+$lcFileName        
           $lcFile2     = File.expand_path('../../../', __FILE__)+$lcFilezip
-            File::open("#{$lcFile2}", "w") { |file| file.write(credit_note.to_xml) }
+          File::open("#{$lcFile2}", "w") { |file| file.write(credit_note.to_xml) }
             
           #$lcFile2     = File.expand_path('../../../../', __FILE__)+"/sunat-ruby9/credit_note.xml"        
           ActionCorreo.bienvenido_email(@notacredit).deliver
