@@ -268,6 +268,6 @@ Devise.setup do |config|
   Devise.secret_key = "18a7eaaa731f8f82200b6c7e7e44c2078e8fe2cfc3d192bcbeb3ba485095df3143fa0942ea1e0ef7c9bd3085115d76dbc970"
 
 
-#Net::NTLM::VERSION::STRING = '0.3.2'
+Net::NTLM::VERSION::STRING = '0.3.2'
 
 end
