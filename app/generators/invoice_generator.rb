@@ -130,8 +130,10 @@ class InvoiceGenerator < DocumentGenerator
 
   private
    
+   
 
-  def data(items = 0, currency = 'PEN')
+    def data(items = 0, currency = 'PEN')
+    
     invoice_data = {id: "#{@serie}-#{"%06d" %  $lg_serial_id}", customer: customer, 
     tax_totals: [{amount: {value: items*$lcIgv, currency: currency}, type: :igv}], legal_monetary_total: {value: $lcTotal * items, currency: currency}, 
     additional_monetary_totals: [{id: "1001", payable_amount: {value: $lcVVenta * items, currency: currency}}]}

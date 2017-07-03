@@ -116,7 +116,7 @@ module SUNAT
         puts $lcFileName 
 
         $lcFileName =path || self.pdf_path || "app/pdf_output/#{file_name}.pdf"
-        $lcFileNameIni =file_name
+        $lcFileNameIni = file_name
         $lcFilezip =path || self.pdf_path || "/#{file_name}.zip"
         
       end
