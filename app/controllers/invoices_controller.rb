@@ -172,7 +172,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
             case_49 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_different_currency2
         
             puts $lcFileName 
-            $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+            $lcFileName1=File.expand_path('../../../../', __FILE__)+ "/"+$lcFileName
         
         else
             case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv2(true)
