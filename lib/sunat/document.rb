@@ -113,7 +113,6 @@ module SUNAT
         build_pdf_footer(pdf)
         puts "docu"
         puts file_name
-        
         puts $lcFileName 
 
         $lcFileName =path || self.pdf_path || "app/pdf_output/#{file_name}.pdf"
