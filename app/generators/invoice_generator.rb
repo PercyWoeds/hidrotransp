@@ -121,8 +121,15 @@ class InvoiceGenerator < DocumentGenerator
   end
   
    
-  #$lcid= "#{@serie}-#{"%06d" % @@document_serial_id }"
-        
+  #$lcid= "#{@serie}-#{"%06d" % @@document_serial_id 
+#$lcTotal      =  1500000
+
+#$lcGuiaRemision ="ORDEN DE COMPRA N° 018502 OPERACIONES DE LEASING 0050082016 CLIENTE: EMPRESA DE TRANSPORTES MI BEATRIZ SAC"
+#$lcGuiaRemision ="001-007837"
+#$lcGuiaRemision =""$lcAutorizacion="Autorizado mediante Resolucion de Intendencia Nro.034-005-0004185/SUNAT del 26/10/2015 "
+  #$lcCuentas="  El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
+  #co SCOTIABANK Cuenta Corriente soles : 000-2681110 CCI : 009-702-000002681110-2Banco de CREDITO Cuen pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancari
+  
   protected
       def customer
        {legal_name:$lcLegalName , ruc: $lcRuc}

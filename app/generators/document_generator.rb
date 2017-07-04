@@ -29,10 +29,12 @@ class DocumentGenerator
   def generate_documents2(document, pdf=false)
   
     if document.valid?
-      begin
+        puts "4455788"
+       puts $lg_serial_id
+       
        document.to_pdf if pdf
        $aviso = "Documento impreso con exito..."      
-      end 
+      
      else
          puts "documento no valido .."
       raise "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
@@ -51,7 +53,7 @@ class DocumentGenerator
       end
       document.to_pdf if pdf
     else
-     raise "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
+     raisuuie "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
     end
   end
  
