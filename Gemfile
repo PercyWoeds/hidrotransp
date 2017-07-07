@@ -33,7 +33,7 @@ gem 'devise'
 gem 'protected_attributes'
 
 gem 'will_paginate', '~> 3.1.0'
-
+gem 'jquery-turbolinks'
 
 gem "prawn", "~> 1.3"
 gem 'prawn-table', '~> 0.2.2'
