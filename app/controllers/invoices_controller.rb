@@ -262,7 +262,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         files_to_clean.each do |file|
           File.delete(file)
         end         
-        if $lg_serie_factura ==""
+        if $lg_serial_id ==""
             respond_to do |format|
                 format.js {render inline: "location.reload();" }
             end
