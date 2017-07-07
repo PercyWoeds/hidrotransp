@@ -206,8 +206,7 @@
 	<table>
 		<tr>
 			<%= form_tag sendsunat_invoices_path, multipart: true do %>
- 				 
-	  		<%= submit_tag "Enviar Sunat  " ,  'data-turbolinks-track' => false  %>
+	  		<%= submit_tag "Enviar Sunat  " ,  data: { turbolinks: true } %>
 			<% end %>
 			
 		</tr>
@@ -217,26 +216,26 @@
 
 	
 
-			  <%= submit_tag  "Imprimir  ",'data-turbolinks-track' => false  %>
+			  <%= submit_tag  "Imprimir  ", data: { turbolinks: true }   %>
 			<% end %>		
 		</tr>
 
 		<tr>
 			<%= form_tag xml_invoices_path, multipart: true do %>
-			  <%= submit_tag  "XML  ",'data-turbolinks-track' => false  %>
+			  <%= submit_tag  "XML  ", data: { turbolinks: true }  %>
 			<% end %>		
 		</tr>
 		
 		<tr>
 			<%= form_tag sendmail_invoices_path, multipart: true do %>
-	  		<%= submit_tag  "Correo Electronico  " ,'data-turbolinks-track' => false  %>
+	  		<%= submit_tag  "Correo Electronico  " , data: { turbolinks: true }   %>
 			<% end %>
 		</tr>
 		
 		<tr>
 			
 			<%= form_tag anular_voideds_path,  multipart: true, data: { confirm: "Esta seguro de anular este documento ?" } do  %>
-	  		<%= submit_tag  "Anular " %>
+	  		<%= submit_tag  "Anular ", data: { turbolinks: true }  %>
 			<% end %>
 
 		</tr>
