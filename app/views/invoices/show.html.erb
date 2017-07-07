@@ -207,6 +207,9 @@
 		<tr>
 			<%= form_tag sendsunat_invoices_path, multipart: true do %>
 	  		<%= submit_tag "Enviar Sunat  " %>
+	  		
+			<%= render "invoices_path" %>
+			
 			<% end %>
 			
 		</tr>
@@ -214,6 +217,8 @@
 		<tr>
 			<%= form_tag print_invoices_path, multipart: true do %>
 			  <%= submit_tag  "Imprimir  " %>
+			  	<%= render "invoices_path" %>
+			
 			<% end %>		
 		</tr>
 
