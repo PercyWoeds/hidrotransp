@@ -188,7 +188,6 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         $lg_serial_id=""
         @@document_serial_id =""
         $aviso=""
-        redirect_to root_url, notice: "Facturas importadas."
         
     end 
 
