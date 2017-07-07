@@ -114,7 +114,6 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
           $lcCantScop2   =""  
           $lcAutorizacion1=$lcAutorizacion +$lcCuentas
           
-                                
     end
 
     def sendsunat
@@ -187,7 +186,6 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         $lg_serial_id=""
         @@document_serial_id =""
         $aviso=""
-        
         
     end 
 
@@ -264,6 +262,12 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         files_to_clean.each do |file|
           File.delete(file)
         end         
+        if $lg_serie_factura ==""
+            respond_to do |format|
+                format.js {render inline: "location.reload();" }
+            end
+        end 
+            
         
         if $lcMoneda == "D"
              case_49 = InvoiceGenerator.new(7, 49, 5,$lg_serie_factura).with_different_currency2
@@ -276,6 +280,7 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         @@document_serial_id =""
         $aviso=""
     end 
+    
     private
     def validate_user
         redirect_to  new_user_session_path, notice: "Necesitas iniciar sesión ..."
