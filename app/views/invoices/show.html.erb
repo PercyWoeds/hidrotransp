@@ -207,7 +207,7 @@
 		<tr>
 			<%= form_tag sendsunat_invoices_path, multipart: true do %>
  				 
-	  		<%= submit_tag "Enviar Sunat  "   %>
+	  		<%= submit_tag "Enviar Sunat  "   'data-turbolinks-track' => false  %>
 			<% end %>
 			
 		</tr>
@@ -217,19 +217,19 @@
 
 	
 
-			  <%= submit_tag  "Imprimir  ",'data-no-turbolink' => true %>
+			  <%= submit_tag  "Imprimir  ",'data-turbolinks-track' => false  %>
 			<% end %>		
 		</tr>
 
 		<tr>
 			<%= form_tag xml_invoices_path, multipart: true do %>
-			  <%= submit_tag  "XML  " %>
+			  <%= submit_tag  "XML  "'data-turbolinks-track' => false  %>
 			<% end %>		
 		</tr>
 		
 		<tr>
 			<%= form_tag sendmail_invoices_path, multipart: true do %>
-	  		<%= submit_tag  "Correo Electronico  " %>
+	  		<%= submit_tag  "Correo Electronico  " 'data-turbolinks-track' => false  %>
 			<% end %>
 		</tr>
 		
