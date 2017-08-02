@@ -136,8 +136,10 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         end 
         
         if $lcMoneda =="D"
+            case_49 = InvoiceGenerator.new(7, 49, 1,$lg_serie_factura).with_different_currency(true)
+            $aviso = 'Factura enviada con exito...'
         else
-        case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv(true)
+            case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv(true)
         end 
         
         $lcGuiaRemision =""      
