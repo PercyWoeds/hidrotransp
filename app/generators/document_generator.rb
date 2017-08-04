@@ -41,7 +41,7 @@ class DocumentGenerator
     end
   end
   
-  def generate_documents3(document, pdf=false)
+ def generate_documents3(document, pdf=false)
     
     if document.valid?
      begin
@@ -53,9 +53,10 @@ class DocumentGenerator
       end
       document.to_pdf if pdf
     else
-     raisuuie "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
+     raise "Documento invalido para caso #{group_case} in group #{group}, ignoring output: #{document.errors.messages}"
     end
   end
+
  
 
 end

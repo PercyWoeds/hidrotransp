@@ -214,24 +214,23 @@ Banco de CREDITO Cuenta Corriente soles : 191-2231128-0-45 CCI : 002191002231128
         end 
 
         if $lcMoneda=='D'
-            
-        case_49 = InvoiceGenerator.new(7, 49, 5,$lg_serie_factura).with_different_currency2(true)
+        case_49 = InvoiceGenerator.new(7, 49, 1,$lg_serie_factura).with_different_currency3(true)
+        
         else
         case_3 = InvoiceGenerator.new(1, 3, 1, $lg_serie_factura).with_igv3(true)
         end     
+        
         $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName        
         $lcFile2    =File.expand_path('../../../', __FILE__)+ "/"+$lcFilezip
         
         ActionCorreo.bienvenido_email(@invoice).deliver
         
-        
-        if $lcMoneda=="D"
-            @mailing = Mailing.new(:td =>$lcTd, :serie => $lg_serie_factura, :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-        else    
-            @mailing = Mailing.new(:td =>$lcTd, :serie => $lg_serie_factura, :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
-        end 
+       
+        @mailing = Mailing.new(:td =>$lcTd, :serie => $lg_serie_factura, :numero => $lcDocument_serial_id, :ruc=>$lcRuc, :flag1 => '1')
         @mailing.save
         $lcGuiaRemision =""
+        
+        
              
 
     end
