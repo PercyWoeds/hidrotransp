@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
          @invoices=Invoice.find_by_sql('Select invoices.*,clients.vrazon2,mailings.flag1 from invoices 
             LEFT JOIN mailings ON invoices.numero = mailings.numero
             LEFT  JOIN clients ON invoices.cliente = clients.vcodigo            
-            order by numero desc').paginate(:page => params[:page])
+            order by numero  desc').paginate(:page => params[:page])
     end     
     
     def search
@@ -62,7 +62,17 @@ class InvoicesController < ApplicationController
         result  = PeruSunatRuc.name_from ruc_number
         result2 = PeruSunatRuc.address_from ruc_number
 
-        $lcLegalName    = result
+        
+        
+        legal_name_spaces =  result.lstrip
+        
+        if legal_name_spaces == nil
+            $lcLegalName    = result
+        else
+            $lcLegalName = result.lstrip 
+        end
+        
+        
 
         $lcDirCli       = result2.gsub(/\s+/," ").strip 
 
