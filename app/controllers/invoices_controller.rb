@@ -11,7 +11,7 @@ class InvoicesController < ApplicationController
          @invoices=Invoice.find_by_sql('Select invoices.*,clients.vrazon2,mailings.flag1 from invoices 
             LEFT JOIN mailings ON invoices.numero = mailings.numero
             LEFT  JOIN clients ON invoices.cliente = clients.vcodigo            
-            order by numero  desc').paginate(:page => params[:page])
+            order by numero::int  desc').paginate(:page => params[:page])
     end     
     
     def search
@@ -110,7 +110,38 @@ class InvoicesController < ApplicationController
         $lcDocument_serial_id =@invoice.numero 
         #$lcAutorizacion =""
         #$lcAutorizacion1=""
+       $lcSerie= @invoice.serie
+        $lcruc = "20545339006" 
+        
+        if $lcTd == 'FT'
+            $lctidodocumento = '01'
+        end
+        if $lcTd =='BV'
+            $lctidodocumento = '03'
+        end 
+        if $lcTd == 'NC'
+            $lctidodocumento = '07'
+        end 
+        if $lcTd == 'ND'
+            $lctidodocumento = '06'
+        end
+        if @invoice.td == "FT"
+          $lcTipoDocCli =  "1"
+        else
+          $lcTipoDocCli =  "6"
+        end 
+         $lcNroDocCli =@invoice.get_cliente(@invoice.cliente)
+         
+         $lcFecha1codigo      = $lg_fecha.to_s
 
+          parts = $lcFecha1codigo.split("-")
+          $aa = parts[0]
+          $mm = parts[1]        
+          $dd = parts[2]       
+        $lcFechaCodigoBarras = $aa << "-" << $mm << "-" << $dd
+        
+        $lcCodigoBarra = $lcruc << "|" << $lcTd << "|" << $lcSerie << "|" << $lcDocument_serial_id.to_s << "|" <<$lcIgv.to_s<< "|" << $lcTotal.to_s << "|" << $lcFechaCodigoBarras << "|" << $lcTipoDocCli << "|" << $lcNroDocCli
+     
           $lcPercentIgv  =18000   
           $lcAutorizacion="Autorizado mediante Resolucion de Intendencia Nro.034-005-0004185/SUNAT del 26/10/2015 "
         $lcCuentas=" El pago del documento sera necesariamente efectuado mediante deposito en cualquiera de las siguientes cuentas bancarias:  
