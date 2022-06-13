@@ -619,8 +619,9 @@ class Factura < ActiveRecord::Base
           if @factura.servicio == "true"
                @texto_obs = @factura.texto2  +  " LOCAL : "  + @factura.texto1
           else
-               @texto_obs = " "
-          end
+               @texto_obs = @factura.guia + " " + @factura.description 
+
+            end
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
@@ -764,7 +765,7 @@ class Factura < ActiveRecord::Base
                   "formato_de_pdf"                    => "",
                    "detraccion_tipo"                  => "",
                    "detraccion_total"                 => "",
-                   "medio_de_pago_detraccion"         => ""
+                   "medio_de_pago_detraccion"         => "",
                    "retencion_tipo" => ln_retencion_tipo ,
                    "retencion_base_imponible" => ln_retencion_base_imponible,
                    "total_retencion" => ln_total_retencion
