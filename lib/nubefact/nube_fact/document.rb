@@ -67,6 +67,10 @@ class NubeFact::Document
     "total_incluido_percepcion",
     "detraccion",
 
+    "retencion_tipo",
+    "retencion_base_imponible",
+    "total_retencion",
+
     "observaciones",
 
     # Nota de credito    
