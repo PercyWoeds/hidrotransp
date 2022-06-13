@@ -2562,6 +2562,7 @@ def newfactura2
     @invoice[:descuento] = "1"
     @invoice[:servicio] = params[:check_servicio]
 
+   
 
     
     days = @invoice.get_dias(params[:factura][:payment_id])
@@ -2599,6 +2600,7 @@ def newfactura2
         end 
         # Check if we gotta process the invoice
         @invoice.process()
+
 
 
         

@@ -584,8 +584,9 @@ class Factura < ActiveRecord::Base
 
        
 
-          Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe ")
-             @factura = Factura.find(self.id)
+          Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe - retencion_importe")
+             
+         @factura = Factura.find(self.id)
 
           puts @factura.code 
 
@@ -694,7 +695,24 @@ class Factura < ActiveRecord::Base
 
           else 
 
+              if @factura.retencion_importe > 0.0
+
+
+
+                ln_retencion_tipo = "1"
+                ln_total_retencion = @factura.retencion_importe
+                ln_retencion_base_imponible = @factura.total 
+
+              else
+                ln_retencion_tipo = ""
+                ln_total_retencion = ""
+                ln_retencion_base_imponible = ""
+
+              end  
+
             puts " sin detraccion**"
+
+
               # create a new Invoice object
               invoice = NubeFact::Invoice.new({
                   "operacion"                   => "generar_comprobante",
@@ -747,6 +765,10 @@ class Factura < ActiveRecord::Base
                    "detraccion_tipo"                  => "",
                    "detraccion_total"                 => "",
                    "medio_de_pago_detraccion"         => ""
+                   "retencion_tipo" => ln_retencion_tipo ,
+                   "retencion_base_imponible" => ln_retencion_base_imponible,
+                   "total_retencion" => ln_total_retencion
+
                  
               })
 
