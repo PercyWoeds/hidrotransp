@@ -3157,7 +3157,8 @@ def newfactura2
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
 
-    @documents = @company.get_documents()    
+    @documents = @company.get_documents()   
+     
     @servicebuys  = @company.get_servicebuys()
     @monedas  = @company.get_monedas()
     @payments  = @company.get_payments()

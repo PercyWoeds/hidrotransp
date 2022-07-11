@@ -581,7 +581,6 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
   # Process the invoice
   def process2
 
-
        
 
           Factura.where(id: self.id).update_all("fecha_cuota1 = fecha2, importe_cuota1 =  total - detraccion_importe - retencion_importe")
@@ -609,8 +608,8 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
           @serie  =  ff[0]
           @numero =  ff[1]
 
-         if @factura.moneda_id == 1 
-           @moneda_nube = 2
+          if @factura.moneda_id == 1 
+                @moneda_nube = 2
           else
                 @moneda_nube = 1
           end
@@ -620,8 +619,12 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
                @texto_obs = @factura.texto2  +  " LOCAL : "  + @factura.texto1
           else
                @texto_obs = @factura.guia + " " + @factura.description 
+          end
 
-            end
+
+
+
+    
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
