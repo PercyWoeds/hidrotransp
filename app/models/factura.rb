@@ -972,6 +972,18 @@ result = invoice.deliver
     end
     return valor     
   end 
+ 
+
+
+  def get_tipocambio(dia)
+      @tipocambio = Tipocambio.find_by(dia: dia )
+
+      if @tipocambio != nil  
+        return @tipocambio.venta
+      else
+        return 0.00
+      end 
+   end 
   
   def get_importe_soles
     valor = 0
