@@ -649,7 +649,7 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
                 "tipo_de_comprobante"               => "1",
                 "serie"                             =>  @serie,
                 "numero"                            =>  @numero ,
-                "sunat_transaction"                 => "33",
+                "sunat_transaction"                 => "30",
                 "cliente_tipo_de_documento"         => "6",
                 "cliente_numero_de_documento"       => @factura.customer.ruc ,
                 "cliente_denominacion"              => @factura.customer.name ,
@@ -696,14 +696,14 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
                 "detraccion_total"                 => @detraccion_total,
                 "detraccion_porcentaje"            => @detraccion_porcentaje,
                 "medio_de_pago_detraccion"         => @medio_de_pago_detraccion,
-                "ubigeo_origen"                    => "150101",
-                "direccion_origen"                 => "CARR. A VENTANILLA KM 25 PROV.CONT.CALLAO - VENTANILLA",
-                "ubigeo_destino"                   => "150134",
-                "direccion_destino"                =>  @factura.texto1,
+                "ubigeo_origen"                    => "",
+                "direccion_origen"                 => "",
+                "ubigeo_destino"                   => "",
+                "direccion_destino"                => "" ,
                  "detalle_viaje"  => "Servicio mantenimiemto ",
-                 "val_ref_serv_trans"  => "1.00",
-                 "val_ref_carga_efec"  => "1.00",
-                 "val_ref_carga_util"  => "1.00"
+                 "val_ref_serv_trans"  => "0",
+                 "val_ref_carga_efec"  => "",
+                 "val_ref_carga_util"  => ""
                
             })
 
@@ -984,7 +984,7 @@ result = invoice.deliver
         return 0.00
       end 
    end 
-  
+
   def get_importe_soles
     valor = 0
     
