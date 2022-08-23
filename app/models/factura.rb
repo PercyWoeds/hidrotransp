@@ -628,8 +628,18 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
-              @detraccion_tipo  =  "25"
-              @detraccion_total =  @factura.detraccion_importe
+ @detraccion_tipo  =  "18"
+              
+
+              if @factura.moneda_id == 1 
+                  @detraccion_total =  @factura.detraccion_importe * @factura.get_tipocambio(@factura.fecha) 
+                  
+
+              else 
+                  @detraccion_total =  @factura.detraccion_importe
+              end 
+
+
               @medio_de_pago_detraccion = "1" 
               @detraccion_porcentaje = @factura.detraccion_percent
 
@@ -690,7 +700,7 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
                 "direccion_origen"                 => "CARR. A VENTANILLA KM 25 PROV.CONT.CALLAO - VENTANILLA",
                 "ubigeo_destino"                   => "150134",
                 "direccion_destino"                =>  @factura.texto1,
-                 "detalle_viaje"  => "Transporte de Combustible",
+                 "detalle_viaje"  => "Servicio mantenimiemto ",
                  "val_ref_serv_trans"  => "1.00",
                  "val_ref_carga_efec"  => "1.00",
                  "val_ref_carga_util"  => "1.00"

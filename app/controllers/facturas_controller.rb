@@ -2318,11 +2318,12 @@ def reportes31
     
     @invoice[:code] = "#{generate_guid11()}"
     
+    
     @invoice[:processed] = false
     @invoice[:descuento] = "0"
     @invoice[:tipoventa_id] = 2
 
-    @invoice[:detraccion_cuenta]  =   "00-000-5353362" 
+    @invoice[:detraccion_cuenta]  =   "00028005075" 
     @invoice[:detraccion_percent] = 4.00 
     @invoice[:detraccion_importe ] = 0.00 
     @invoice[:retencion_importe ] = 0.00 
