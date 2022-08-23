@@ -977,7 +977,7 @@ result = invoice.deliver
 
   def get_tipocambio(fecha1)
 
-    fecha2 = fecha1.
+    
 
       @tipocambio = Tipocambio.all 
 
