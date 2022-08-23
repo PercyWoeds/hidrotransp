@@ -975,11 +975,11 @@ result = invoice.deliver
  
 
 
-  def get_tipocambio(dia)
-      @tipocambio = Tipocambio.find_by(dia: dia )
+  def get_tipocambio(fecha1)
+      @tipocambio = Tipocambio.where("dia>=? and dia <=?","#{fecha1} 00:00:00","#{fecha1} 23:59:59" )
 
-      if @tipocambio != nil  
-        return @tipocambio.venta
+      if @tipocambio.last != nil  
+        return @tipocambio.last.venta
       else
         return 0.00
       end 
