@@ -979,8 +979,8 @@ result = invoice.deliver
 
     fecha2 = fecha1.
 
-      @tipocambio = Tipocambio.all? 
-      
+      @tipocambio = Tipocambio.all 
+
 
       if @tipocambio.last != nil  
         return @tipocambio.last.venta
