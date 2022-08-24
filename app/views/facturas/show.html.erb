@@ -636,9 +636,9 @@
   
 	<table>
 	  
-		 <% if current_user.level=='admin' || current_user.level=='parte'  %>
+		 <% if current_user.level=='admin' %>
 		  <tr>
-			 <%= link_to 'Anular ', "/facturas/do_anular/#{@invoice.id}" %> 
+			 <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %> 
 
       </tr>
       

@@ -628,7 +628,7 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
 
           if @factura.detraccion_importe  > 0.0
             puts " ** detraccion********************************************"
- @detraccion_tipo  =  "18"
+            @detraccion_tipo  =  "18"
               
 
               if @factura.moneda_id == 1 
@@ -660,7 +660,7 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
                 "fecha_de_emision"                  => @fecha_emision,
                 "fecha_de_vencimiento"              => @fecha_vmto ,
                 "moneda"                            => @moneda_nube,
-                "tipo_de_cambio"                    => "",
+                "tipo_de_cambio"                    => @factura.get_tipocambio(@factura.fecha),
                 "porcentaje_de_igv"                 => "18.00",
                 "descuento_global"                  => "",
                 "total_descuento"                   => "",
