@@ -49,9 +49,14 @@
   </div>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email,  "Correo eletronico 1 " %><br />
     <%= f.text_field :email %>
   </div>
+<div class="field">
+    <%= f.label :email2, "Correo eletronico 2 " %><br />
+    <%= f.text_field :email2 %>
+  </div>
+
   <div class="field">
     <%= f.label :account, "Codigo interno" %><br />
     <%= f.text_field :account, :onclick => "$(this).select();" %>

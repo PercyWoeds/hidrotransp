@@ -636,7 +636,7 @@
   
 	<table>
 	  
-		 <% if current_user.level=='admin' %>
+		 <% if current_user.level=='admin' and  @invoice.processed =="1" %>
 		  <tr>
 			 <%= link_to 'Anular', "/facturas/do_anular/#{@invoice.id}" %> 
 
