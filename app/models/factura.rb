@@ -85,7 +85,7 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
 
      when serie == "2"
 
-      @serie = "FF01"
+      @serie = "FFF2"
  
      when serie == "3"
 
