@@ -31,8 +31,17 @@
             <%= link_to customerpayment.code, customerpayment, :title => "Ir a factura" %>
           </td>
           <td class="bordered_right bordered_bottom ">
-            <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>            
+            <%if customerpayment.customer_id.nil? %>
+            <%=  customerpayment.get_cliente_customer_payment(customerpayment.id) %>   
+
+            <% else %>
+              <%=  customerpayment.customer.name  %>   
+
+
+            <% end %> 
+
           </td>
+
 
           <td class="bordered_right bordered_bottom right">
             <%= money(customerpayment.total) %>

@@ -16,7 +16,7 @@ default: &default
 
 development:
   <<: *default
-  database: mnygo_app_development_k
+  database: mnygo_app_development_h
 
 test:
   <<: *default

@@ -1248,7 +1248,10 @@ end
 
   private
   def delivery_params
-    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,:comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,:employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,:address2_id,:tranportorder_id,:fecha3,:fecha4)
+    params.require(:delivery).permit(:company_id,:location_id,:division_id,:customer_id,:description,
+      :comments,:code,:subtotal,:tax,:total,:processed,:return,:date_processed,:user_id,:fecha1,:fecha2,
+      :employee_id,:empsub_id,:subcontrat_id,:truck_id,:truck2_id,:address_id,:remision,:remite_id,
+      :address2_id,:tranportorder_id,:fecha3,:fecha4)
   end
 
 end

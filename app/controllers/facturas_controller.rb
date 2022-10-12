@@ -12,6 +12,7 @@ class FacturasController < ApplicationController
     
     require "open-uri"
 
+
   def reportes
   
     @company=Company.find(1)          
@@ -33,9 +34,6 @@ class FacturasController < ApplicationController
                   }
                }
                
-               
-        
-             
         end   
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
@@ -1580,21 +1578,78 @@ def reportes31
 
 
 
-  # def discontinue
-    
-  #   @guiasselect = Factura.find(params[:products_ids])
+  def discontinue2
 
-  #   for item in @guiasselect
-  #       begin
-  #         a = item.id
-  #         b = item.remite_id               
-  #         new_invoice_guia = Deliverymine.new(:mine_id =>$minesid, :delivery_id =>item.id)          
-  #         new_invoice_guia.save
-           
+
+     @customerpayment_id = params[:customerpayment_id]
+    
+    
+    
+    @facturasselect = Factura.find(params[:products_ids])
+
+    for item in @facturasselect
+        begin
+          a = item.id
+          b = Product.find_by(code: item.cod_prod)        
+
+               
+          cantidad0 = 0
+          cantidad0 = item.importe.to_f / item.precio.to_f
+              
+     
+            
+          
+          new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price: preciolista, price_discount: precio_descto, quantity: cantidad0,total: @importe )
+          
+          if new_invoice_detail.save
+              
+            a= Sellvale.find(item.id)
+
+            a.processed ='1'
+            a.save
+            
+          end 
+        end              
+    end
+    
+    @invoice = Factura.find(@factura_id)
+    
+    @invoice[:total] = @invoice.get_subtotal2.round(2)
+    
+    lcTotal = @invoice[:total]  / 1.18
+    @invoice[:subtotal] = lcTotal.round(2)
+    
+    lcTax =@invoice[:total] - @invoice[:subtotal]
+    @invoice[:tax] = lcTax.round(2)
+    
+    @invoice[:balance] = @invoice[:total]
+    @invoice[:pago] = 0
+    @invoice[:charge] = 0
+    @invoice[:descuento] = "1"
+    @invoice[:fecha_cuota1] = @invoice[:fecha2]
+     @invoice[:importe_cuota1] = @invoice[:total]
+    
+    
+    respond_to do |format|
+      if @invoice.save
+        # Create products for kit
         
-  #       end              
-  #   end
-  # end  
+                # Check if we gotta process the invoice
+        
+        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
+      end
+    end
+  
+
+
+
+  end  
+
+
   def excel
 
     @company=Company.find(1)          
@@ -1647,8 +1702,30 @@ def reportes31
   def do_process
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-  #  @invoice.process
+   
+    case
+
+
+    when  @invoice.document_id == 1
     @invoice.process2
+    flash[:notice] = "The invoice order has been processed."
+    
+
+    when @invoice.document_id == 2
+    @invoice.process3
+    flash[:notice] = "La nota de credido ha sido procesada."
+    
+
+    when @invoice.document_id == 12
+    @invoice.process4
+    flash[:notice] = "La nota de debito ha sido procesada."
+    
+
+    when  @invoice.document_id == 13
+    @invoice.process5
+    flash[:notice] = "La boleta ha sido procesada."
+    end 
+
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
   end
@@ -1657,10 +1734,34 @@ def reportes31
   def do_process2
     @invoice = Factura.find(params[:id])
     @invoice[:processed] = "1"
-    @invoice.process2
+    puts "documnto id"
+    puts @invoice.document_id
     
+    case 
+    when @invoice.document_id == 1
+    @invoice.process2
+    flash[:notice] = "The invoice order has been processed."
+
+    when  @invoice.document_id == 2
+
+
+    @invoice.process3
+    flash[:notice] = "La nota de credido ha sido procesada."
+     
+
+    when @invoice.document_id == 12
+    @invoice.process4
+    flash[:notice] = "La nota de credido ha sido procesada."
+     
+
+    when @invoice.document_id == 13
+    @invoice.process5
+    flash[:notice] = "La boleta  ha sido procesada."
+    end 
+
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
+
   end
   
   # Do send invoice via email
@@ -2544,6 +2645,7 @@ def newfactura2
     @monedas = @company.get_monedas()
     @tarjetas = Tarjetum.all
    
+    @anexo8_ncs = Anexo8.order(:tipo,:code )
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
     
@@ -2569,7 +2671,9 @@ def newfactura2
     days = @invoice.get_dias(params[:factura][:payment_id])
     @invoice[:fecha2] = @invoice[:fecha] + days.days     
 
+  @invoice[:code] = @invoice.get_maximo(params[:option],params[:factura][:document_id])
 
+   
     
      parts = (@invoice[:code]).split("-")
      id = parts[0]
@@ -5760,8 +5864,47 @@ def cuadre02
 
       pdf      
   end
+
+
+
+  
+def newpayment
+    
+    @company = Company.find(1)
+
+    @customer_payment  = CustomerPayment.find(params[:customerpayment_id]) 
+  
+    @customer = Customer.find(@customer_payment.customer_id) 
+    
+    @customer_name = @customer.name
+    @customer_code = @customer.account 
+    
+    zero = 0.00
+
+
+
+
+
+
+      @detalleitems =  Factura.where("processed=? and customer_id =? and ROUND( cast(balance as NUMERIC) , 2 ) > ? ","1",@customer.id,zero).order(:fecha)
+
+  
+
+    @customer_payment_detail = CustomerPaymentDetail.new
+
+  
+  end 
+
+
+def discontinue2
+  @products = Factura.find(params[:product_ids])
+end
+
+
+
       
   private
+  
   def factura_params
     params.require(:factura).permit(:company_id,:location_id,:division_id,:customer_id,
       :description,:comments,:code,:subtotal,:tax,:total,:processed,:return,

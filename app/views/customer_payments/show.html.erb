@@ -64,6 +64,19 @@
 
 <%= hr() %>
 
+
+<%= form_tag  url_for(:controller => 'facturas', :action => 'newpayment'), :method => "get" do  %>
+ 
+  <%= hidden_field_tag "customerpayment_id" , @customerpayment.id %>
+  
+
+  <%= submit_tag("Agregar Facturas pendientes") %>
+
+<% end %>
+
+
+<%= hr() %>
+
 <h3>
   Details
 </h3>
@@ -150,7 +163,7 @@
         </td>
 
       </tr>
-    <% end %>
+    <% end %> 
     <tr>
       <td colspan="6" class="bordered_bottom bordered_right">
         &nbsp;
@@ -213,6 +226,9 @@
 <br />
 
 <%= hr() %>
+
+
+
 
 
 <br />

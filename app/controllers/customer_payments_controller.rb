@@ -6,13 +6,15 @@ include ServicebuysHelper
 
 class CustomerPaymentsController < ApplicationController
 
+    before_action :set_customer_payment, only: [:show, :edit, :update, :destroy]
+
+
     $: << Dir.pwd  + '/lib'
     before_action :authenticate_user!
     
     require "open-uri"
-   
-
-    
+    require "date"
+       
   
 
 
@@ -363,9 +365,11 @@ class CustomerPaymentsController < ApplicationController
         render :layout => false
   end
   
-  # Autocomplete for products
+  
+  # Autocomplete for customers
   def ac_customers
-    @customer = customer.where(["company_id = ? AND (ruc LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])   
+    @customers = Customer.where(["company_id = ? AND (ruc iLIKE ? OR name iLIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
+   
     render :layout => false
   end
   
@@ -392,11 +396,7 @@ class CustomerPaymentsController < ApplicationController
     render :layout => false
   end
   
-  # Autocomplete for customers
-  def ac_customers
-    @customers = Customer.where(["company_id = ? AND (email LIKE ? OR name LIKE ?)", params[:company_id], "%" + params[:q] + "%", "%" + params[:q] + "%"])
-    render :layout => false
-  end
+  
   
   # Show customerpayments for a company
   
@@ -494,6 +494,8 @@ class CustomerPaymentsController < ApplicationController
     @monedas  = @company.get_monedas()
     @documents  = @company.get_documents()
 
+    @pendientes = @company.get_customers_pendientes(@customerpayment.customer_id )
+
         
   end
 
@@ -505,7 +507,7 @@ class CustomerPaymentsController < ApplicationController
     @action_txt = "Create"
     
     @customerpayment = CustomerPayment.new
-    @customerpayment[:code]="#{generate_guid8()}"  
+   
     @customerpayment[:processed] = false
       
     @company = Company.find(params[:company_id])
@@ -519,8 +521,12 @@ class CustomerPaymentsController < ApplicationController
     @documents  = @company.get_documents()
     @concepts = Concept.all 
 
+
+
     @ac_user = getUsername()
     @customerpayment[:user_id] = getUserId()
+    @customerpayment[:fecha1] = Date.today 
+    
   end
 
   # GET /customerpayments/1/edit
@@ -562,18 +568,20 @@ class CustomerPaymentsController < ApplicationController
     @documents  = @company.get_documents()
     @concepts = Concept.all 
 
-    @customerpayment.processed='1'
+    @customerpayment.processed = '1'
         
-    @customerpayment.user_id=@current_user.id 
+    @customerpayment.user_id = @current_user.id 
+    @customerpayment.code = @customerpayment.get_maximo("1")
+   
 
     respond_to do |format|
       if @customerpayment.save
         # Create products for kit
-        @customerpayment.add_products(items)
+      #  @customerpayment.add_products(items)
         
         # Check if we gotta process the customerpayment
-        @customerpayment.process()
-        @customerpayment.correlativo()              
+       # @customerpayment.process()
+       # @customerpayment.correlativo()              
         
         format.html { redirect_to(@customerpayment, :notice => 'customerpayment was successfully created.') }
         format.xml  { render :xml => @customerpayment, :status => :created, :location => @customerpayment }
@@ -660,6 +668,9 @@ class CustomerPaymentsController < ApplicationController
       format.html { redirect_to("/companies/customer_payments/" + company_id.to_s) }
     end
   end
+
+
+
 
   def client_data_headers
 
@@ -3012,12 +3023,120 @@ class CustomerPaymentsController < ApplicationController
 
 
 
+  
+  def updatemultiple
+ 
+       Factura.where(id: params[:products_ids]).update_all(params[:factura])
+        
+      flash[:notice] = "Guias modificadas"
+      redirect_to  "/companies/customerpayments/1" 
+      
+  end
 
+def edit_multiple
+
+
+  @customerpayment_id  = params[:id]
+  
+  @facturas  = Factura.find(params[:products_ids])
+
+  @seleccion = params[:course]
+
+  detalle  =  params[:course]
+  puts "customer payment "
+ puts @customerpayment_id 
+
+ for factura in @facturas 
+
+    puts factura.id 
+
+    puts "==>> "
+
+    a = detalle["#{factura.id}"]
+
+    puts a 
+
+     @customer_payment_detail  = CustomerPaymentDetail.new(total: a , descrip: "Actualizacion.", factura_id: factura.id , 
+      customer_payment_id:  @customerpayment_id , factory: 0.0, ajuste: 0.0, compen: 0.0)
+
+    
+           if  @customer_payment_detail.save
+
+             factura_1 = Factura.find(factura.id)
+             factura_1.balance = factura_1.total - a.to_f   
+             factura_1.save 
+
+
+            puts factura.id
+            puts "==>> "
+            puts a 
+
+          end 
+
+
+  end 
+
+
+
+end
+
+
+def discontinue3 
+
+  @facturas  = Factura.find(params[:products_ids])
+
+  @seleccion = params[:course]
+
+  detalle  =  params[:course]
+
+
+  for factura in @facturas 
+
+    puts factura.id 
+
+    puts "==>> "
+
+    a = detalle["#{factura.id}"]
+
+    
+
+  end 
+
+end 
 
   
 
   #####
   private
+
+    def update_column_for_all_records(column, updates)
+        cases = []
+        ids = updates.keys.map(&:to_i)
+
+        Car.where(id: ids).each do 
+        id = _1.id
+        new_value = updates[id]
+        cases << sanitize_case(id, new_value) 
+        end
+
+        update_query = "#{column} = CASE id #{cases.join(" ")} END"
+
+        Factura.where(id: ids).update_all(update_query)
+    end
+
+    def sanitize_case(id, new_value)
+      Factura.sanitize_sql [ "WHEN :id THEN :value", { id: id, value: new_value} ]
+    end
+
+
+
+  def set_customer_payment
+
+       @customerpayment  = CustomerPayment.find(params[:id])
+
+  end 
+
+
   
   def customerpayment_params
     params.require(:customer_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,

@@ -35,6 +35,14 @@
          @dato = Customer.find(id)
          return @dato 
        end 
+
+       def get_customers_pendientes(cliente)
+
+        @pendientes = Factura.where("balance > 0 ")
+
+        return @pendientes 
+
+       end 
        
        def get_qty_nota_credito(id,value )
         facturas  = FacturaDetail.where(factura_by: id)

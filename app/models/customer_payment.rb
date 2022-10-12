@@ -140,7 +140,25 @@ TABLE_HEADERS9 = ["ITEM",
                     "May-2018",              
                     "Jun-2018",
                     "TOTAL   "]
-                   
+ 
+
+
+
+
+ def get_maximo(serie)
+
+    @serie = serie 
+    a = CustomerPayment.where("SUBSTRING(code,1,1) = ? ", @serie).maximum("cast(substring(code,3,8) as int)")
+       if a.nil?
+        return  @serie + "-000001"
+      else
+        return  @serie  + "-"+ (a + 1).to_s.rjust(6, '0') 
+
+      end 
+ end 
+
+
+                  
                    
 def get_banco_moneda(banco)
   

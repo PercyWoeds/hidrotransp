@@ -158,7 +158,7 @@
         </td>
       </tr>
     <% end %>
-    <tr>
+    <tr>_
       <td colspan="5" class="bordered_bottom bordered_right">
         &nbsp;
       </td>
@@ -292,6 +292,7 @@
 
 
 <% if @invoice.processed  != "1" %>
+
 
 
 <%= form_tag(newfactura2_facturas_path, method: "get") do %>

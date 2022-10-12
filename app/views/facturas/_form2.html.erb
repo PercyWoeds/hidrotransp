@@ -13,6 +13,7 @@
 
 <%= hr() %>
 
+
 <div class="mid_box bordered_right">
   <%= form_for(@invoice) do |f| %>
     <h4>
@@ -28,10 +29,13 @@
     </div>
     
   
-       <div class="field">
-          <%= f.label :code, "Code*", :class => "bold" %><br />
-          <%= f.text_field :code  %>
-        </div>
+     
+      <div class="field">
+      <%= "Serie:  " %><br />
+     
+        <%= select_tag(:option, options_for_select([["FFF1",1],["FFF2",2] ], params[:option] ), class:"select") %>
+     
+     </div>
         
       <div class="field">
       <%= f.label :tipo , "Factura :", :class => "bold" %><br />

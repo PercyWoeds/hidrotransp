@@ -4,6 +4,7 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :anexo8s
   resources :devols
   resources :tipomovs
   resources :tirads
@@ -150,11 +151,14 @@ require 'sidekiq/web'
     collection { get :rpt_purchase_all   }
     
     collection { get :rpt_pago_adelantado   }
-        collection { get :factura3 }
+    collection { get :factura3 }
         
     collection { get :cuadre01   }    
     collection { get :cuadre02   }
     collection { get :rit_01    }
+    collection { get :newpayment  }
+    collection { post :discontinue2  }
+ 
         
   end 
     
@@ -178,6 +182,10 @@ require 'sidekiq/web'
     collection { post :discontinue }
     collection do 
       put :discontinue 
+    end 
+
+    collection do 
+      put :discontinue2 
     end 
     
     collection { post :xml }
@@ -296,6 +304,7 @@ end
 
     collection do 
       put :discontinue 
+      put :discontinue2 
     end 
     
   end 
@@ -374,8 +383,32 @@ end
   end 
  
   resources :customer_payments do 
+
+
     collection { get :rpt_ccobrar12}
+
+    collection do 
+                  get :newpayment 
+                end
+
+    collection { post :discontinue }
+     
+    collection { post :edit_multiple }
+    collection { post :discontinue3  }
+
+        collection do
+          get :edit_multiple
+          put :update_multiple
+
+        end
+
+
+   
+    
   end 
+ 
+
+
  
   resources :payrolls do   
   
@@ -953,11 +986,11 @@ end
   match 'customer_payments/rpt_ccobrar10_pdf/:id' => 'customer_payments#rpt_ccobrar10_pdf', via: [:get, :post]
   match 'customer_payments/rpt_ccobrar11_pdf/:id' => 'customer_payments#rpt_ccobrar11_pdf', via: [:get, :post]
   
-  match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
+   match 'companies/customer_payments/:company_id' => 'customer_payments#list_customerpayments', via: [:get, :post]  
   
   match 'companies/reports/rpt_ordenes1_pdf/:company_id' => 'reports#rpt_ordenes1_pdf', via: [:get, :post]
   
-  resources :customer_payments
+  resources :customer_payments , only: [:index,:show]
 
   match 'inventories_detaisl/additems/:company_id' => 'additems#list', via: [:get, :post]  
   resources :inventory_details
