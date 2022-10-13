@@ -65,7 +65,26 @@
 
                 <div id="cards-wrapper" class="cards-wrapper row">
                     
-          
+                      
+            <%if @current_user.level == "parte" || @current_user.level == "admin"|| @current_user.level == "playa" %>
+
+                        <div class="item item-green col-md-4 col-sm-6 col-xs-6">
+                            <div class="item-inner">
+                                <div class="icon-holder">
+                                    <i class="icon fa icon_documents"></i>
+                                </div>
+                                <h3 class="title"> Gestion Administracion </h3>
+                                <p class="intro">Gestion administracion </p>
+                                <%= link_to "", "/companies/parte/#{@company.id}", class: "link" %>
+                                 <span></span>
+
+                                
+                            </div>
+                        </div>
+
+            <% end %>
+
+
 
             <%if @current_user.level == "compras" || @current_user.level == "admin" || @current_user.level == "parte" || @current_user.level == "finanzas"  %>
 

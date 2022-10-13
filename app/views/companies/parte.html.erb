@@ -26,7 +26,7 @@
 
   <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Factura / Boletas / Notas Venta ", sellvales_path  %>
+    <%= link_to "Control de abastecimiento ", abastes_path  %>
   </h3>
 
   <p>
@@ -35,121 +35,41 @@
   
 
 <% end %>
+
+
   <%= hr() %>
 
     <h3>
     <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro venta por contometros ",ventaislas_path %>
+    <%= link_to "Hojas de ruta  ",ventaislas_path %>
   </h3>
   <p>
      Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
   </p>
   
   
+  </div>
 
-
-    <%= hr() %>  
-
-    <% if current_user.level != "playa"%>
-
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Afericion ",afericions_path %>
-  </h3>
-  <p>
-     Agregar, editar or eliminar lecturas de ventas de combustible para tu negocio.
-  </p>
-    <%= hr() %>  
-
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Faltante/Sobrante",faltantes_path %>
-  </h3>
-  <p>
-     Agregar, editar or eliminar faltante/sobrante de combustible para tu negocio.
-  </p>
-    <%= hr() %>  
-
-
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Depositos",depositos_path %>
-  </h3>
-  <p>
-     Agregar, editar or eliminar registro de depositos 
-  </p>
+  <div class="mid_box">
   
-    <%= hr() %>  
-
-    <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Venta Colateral",venta_productos_path %>
-  </h3>
-  <p>
-     Agregar, editar or eliminar registro de colaterales 
-  </p>
-    <%= hr() %>  
-
-
-
   <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Gastos",expenses_path %>
+  <div>
+    <%= image_tag("clients_32.png", :class => "vmiddle") %>
+    <%= link_to "Reportes  ", islands_path %>
+        </div>
   </h3>
   <p>
-     Agregar, editar or eliminar registro de gastos
-  </p>
-  
-<%= hr() %>  
-  <h3>
-    <%= image_tag("invoice_32.png", :class => "vmiddle") %>
-    <%= link_to "Registro de Remitos/ Tiradas",tirads_path %>
-  </h3>
-  <p>
-     Agregar, editar or eliminar registro de gastos
-  </p>
-  
-<%= hr() %>  
+     Reportes varios
+     
 
 
+
+ 
+    
+<%= hr() %>
+    
 </div>
 
-<div class="mid_box">
-  
-  <h3>
-  <div>
-    <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Isla", islands_path %>
-        </div>
-  </h3>
-  <p>
-     Agregar, editar or eliminar Isla
-     
-
-<%= hr() %>
-<h3>
-  <div>
-    <%= image_tag("clients_32.png", :class => "vmiddle") %>
-    <%= link_to "Tanques", tanques_path %>
-        </div>
-  </h3>
-  <p>
-     Agregar, editar or eliminar Tanques
-     
-
-<%= hr() %>
 
 
-  <h3>
-    <%= image_tag("supplier_32.png", :class => "vmiddle") %>
-    <%= link_to "Surtidor", pumps_path %>
-  </h3>
 
-  <p>
-     Agregar, editar or eliminar surtidor para tu eess.
-  </p>
-  
- 
-    <%= hr() %>
-    
-<% end %>

@@ -1,0 +1,2 @@
+module AbastesHelper
+end

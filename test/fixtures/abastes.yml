@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  fecha: 2022-10-12 17:23:49
+  customer_id: 1
+  vehiculo_id: 1
+  employee_id: 1
+  km: MyString
+  galones: MyString
+  horometro: 1
+  comments: MyText
+  user_id: 1
+
+two:
+  code: MyString
+  fecha: 2022-10-12 17:23:49
+  customer_id: 1
+  vehiculo_id: 1
+  employee_id: 1
+  km: MyString
+  galones: MyString
+  horometro: 1
+  comments: MyText
+  user_id: 1

@@ -1,0 +1,68 @@
+<%= simple_form_for(@abaste) do |f| %>
+  
+
+<% if @abaste.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@abaste.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @abaste.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-inputs">
+
+      <div class="field">
+      <%= f.label :fecha, "Fecha Ingreso:" %><br>
+      <%= f.date_field :fecha  %>
+      </div>    
+
+      <div class="field">
+      <%= f.label :customer_id ,"Cliente  : " %><br />
+      <%= f.collection_select :customer_id, @customers, :id, :name, :prompt => true %>
+      </div>
+
+
+      <div class="field">
+      <%= f.label :truck_id ,"Vehiculo : " %><br />
+      <%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %>
+      </div>
+
+
+      <div class="field">
+      <%= f.label :employee_id ,"Empleado : " %><br />
+      <%= f.collection_select :employee_id, @employees, :id, :full_name, :prompt => true %>
+      </div>
+
+
+      <div class="field">
+      <%= f.label :km, "K.M.:" %><br>
+      <%= f.text_field :km %>
+      </div>
+
+
+      <div class="field">
+      <%= f.label :qty ,"Galones :"%><br />
+      <%= f.number_field :qty  , class: :text_field, step: :any %> 
+      </div>
+
+      <div class="field">
+      <%= f.label :horometro ,"Horometro :"%><br />
+      <%= f.number_field :horometro , class: :text_field, step: :any %>  
+      </div>
+
+      <div class="field">
+      <%= f.label :comments, "Observaciones:" %><br>
+      <%= f.text_field :comments  %>
+      </div>
+
+
+  
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
