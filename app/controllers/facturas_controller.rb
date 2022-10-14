@@ -5877,18 +5877,12 @@ def newpayment
     @customer = Customer.find(@customer_payment.customer_id) 
     
     @customer_name = @customer.name
+  
     @customer_code = @customer.account 
     
     zero = 0.00
 
-
-
-
-
-
-      @detalleitems =  Factura.where("processed=? and customer_id =? and ROUND( cast(balance as NUMERIC) , 2 ) > ? ","1",@customer.id,zero).order(:fecha)
-
-  
+    @detalleitems =  Factura.where("processed=? and customer_id =? and ROUND( cast(balance as NUMERIC) , 2 ) > ? ","1",@customer.id,zero).order(:fecha)
 
     @customer_payment_detail = CustomerPaymentDetail.new
 

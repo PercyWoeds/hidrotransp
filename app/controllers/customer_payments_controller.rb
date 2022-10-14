@@ -3044,7 +3044,8 @@ def edit_multiple
 
   detalle  =  params[:course]
   puts "customer payment "
- puts @customerpayment_id 
+  
+  puts @customerpayment_id 
 
  for factura in @facturas 
 
@@ -3063,7 +3064,7 @@ def edit_multiple
            if  @customer_payment_detail.save
 
              factura_1 = Factura.find(factura.id)
-             factura_1.balance = factura_1.total - a.to_f   
+             factura_1.balance = factura_1.balance  - a.to_f   
              factura_1.save 
 
 
