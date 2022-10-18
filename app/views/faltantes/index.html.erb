@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Faltantes</h1>
+<h1>Listing Faltantes/Sobrantes</h1>
 
 <table>
   <thead>
@@ -27,8 +27,10 @@
         <td><%= link_to 'Show', faltante %></td>
         
         <td><%= link_to 'Edit', edit_faltante_path(faltante) %></td>
-        
+
+          <% if current_user.level == "admin"%>
         <td><%= link_to 'Destroy', faltante, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

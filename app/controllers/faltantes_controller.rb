@@ -20,6 +20,7 @@ class FaltantesController < ApplicationController
     @faltante = Faltante.new
     @employees = Employee.all
     @faltantes = Tipofaltante.all
+    @faltante[:fecha] = Date.today 
     
   end
 
