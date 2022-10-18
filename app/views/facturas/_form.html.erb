@@ -81,7 +81,10 @@
       <%= f.label :payment_id,"Condiciones  de Pago " %><br />
       <%= f.select :payment_id,options_from_collection_for_select(@payments,'id','descrip') %>
     </div>
-
+  <div class="field">
+      <%= f.label :truck_id,"Vehiculo de Despacho" %><br />
+      <%= f.select :truck_id,options_from_collection_for_select(@trucks,'id','placa') %>
+    </div>
 
 
   

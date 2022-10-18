@@ -18,12 +18,17 @@ class VarillajesController < ApplicationController
 
   # GET /varillajes/new
   def new
+    @company=Company.find(1)
     @varillaje = Varillaje.new
+    @trucks = @company.get_trucks()
     @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
   end
 
   # GET /varillajes/1/edit
   def edit
+      @company=Company.find(1)
+ 
+    @trucks = @company.get_trucks()
       @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
   end
 
@@ -32,7 +37,10 @@ class VarillajesController < ApplicationController
   def create
     @tanques = Tanque.all
     @varillaje = Varillaje.new(varillaje_params)
-    
+      @company=Company.find(1)
+   
+    @trucks = @company.get_trucks()
+
     @varillaje[:inicial] = 0 
     @varillaje[:compras] = 0
     @varillaje[:directo] = 0
@@ -44,7 +52,7 @@ class VarillajesController < ApplicationController
     respond_to do |format|
       if @varillaje.save
         
-        @tanque_up = Tanque.find(@varillaje.tanque_id)
+        @tanque_up = Tanque.find_by(@varillaje.tanque_id,@varillaje.truck_id)
         @tanque_up.varilla = @varillaje[:varilla] 
         @tanque_up.save
     
@@ -61,7 +69,10 @@ class VarillajesController < ApplicationController
   # PATCH/PUT /varillajes/1.json
   def update
     
-    
+     @company=Company.find(1)
+   
+    @trucks = @company.get_trucks()
+
     respond_to do |format|
       if @varillaje.update(varillaje_params)
         @tanque_up = Tanque.find(@varillaje.tanque_id)
@@ -99,7 +110,7 @@ class VarillajesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def varillaje_params
-      params.require(:varillaje).permit(:tanque_id, :product_id, :inicial, :compras, :directo, :consumo, :transfe, :saldo, :varilla, :dife_dia, :fecha, :documento)
+      params.require(:varillaje).permit(:tanque_id, :product_id, :inicial, :compras, :directo, :consumo, :transfe, :saldo, :varilla, :dife_dia, :fecha, :documento,:truck_id)
     end
     
 end

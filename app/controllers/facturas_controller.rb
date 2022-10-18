@@ -16,30 +16,471 @@ class FacturasController < ApplicationController
   def reportes
   
     @company=Company.find(1)          
-    @fecha = params[:fecha1]    
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
     
-    @parte_rpt = @company.get_parte_10(@fecha)
-    
-    
+    @parte_rpt1 = @company.get_venta_hidro(@fecha1,@fecha2)
+    @parte_rpt2 = @company.get_compra_hidro(@fecha1,@fecha2,2)
+    @parte_rpt3 = @company.get_varilla_hidro(@fecha1,@fecha2)
+
+
+
+        
 
     case params[:print]
       when "To PDF" then 
+
+
         begin 
-         render  pdf: "Ordenes ",template: "varillajes/parte_rpt.pdf.erb",locals: {:varillajes => @parte_rpt},
-         :header => {
-           :spacing => 5,
-                           :html => {
-                     :template => 'layouts/pdf-header.html',
-                           right: '[page] of [topage]'
-                  }
-               }
+           Prawn::Document.generate "app/pdf_output/parte_diario_1.pdf", :page_layout => :landscape  ,:page_size=>"A4"   do |pdf|
+               pdf.font "Helvetica"
+               pdf = build_pdf_header9(pdf)
+               pdf = build_pdf_body9(pdf)
+               build_pdf_footer9(pdf)
+               $lcFileName =  "app/pdf_output/parte_diario_1.pdf"      
                
+           end     
+
+           $lcFileName1=File.expand_path('../../../', __FILE__)+ "/"+$lcFileName
+                       
+           send_file("#{$lcFileName1}", :type => 'application/pdf', :disposition => 'inline')
+         
         end   
+
+
       when "To Excel" then render xlsx: 'exportxls'
       else render action: "index"
     end
   end
+  ##################################
+
+
+
+
+def build_pdf_header9(pdf)
+
+
+    pdf.font "Helvetica" , :size => 8
+     image_path = "#{Dir.pwd}/public/images/LOGOHIDRO2.jpg"
+
+   
   
+      table_content = ([ [{:image => image_path, :rowspan => 3 }, 
+       {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
+         ["VERSION: ","4"], 
+         ["PARTE DIARIO ","PAGINA : ","1 de 1 "] 
+        
+         ])
+    
+
+
+
+      pdf.table(table_content  ,{
+          :position => :center,
+          :width => pdf.bounds.width
+        })do
+          columns([1,2]).font_style = :bold
+           columns([0]).width = 118.55
+           columns([1]).width = 451.34
+           columns([1]).align = :center
+           
+           columns([2]).width = 100
+         
+           columns([3]).width = 100
+     
+        end
+       
+        table_content2 = ([["FECHA : ",Date.today.strftime("%d/%m/%Y")]])
+
+        pdf.table(table_content2,{:position=>:right }) do
+
+           columns([0, 1]).font_style = :bold
+           columns([0, 1]).width = 100
+           
+        end 
+
+    
+        pdf.text "(1) FECHA:  " +  @fecha1 + " AL " +  @fecha2
+        
+        pdf.move_down 2
+     
+     pdf 
+
+  
+
+ end   
+
+ def build_pdf_body9(pdf)
+
+   pdf.font "Helvetica"  , :size => 8
+   
+   pdf.text ""
+   pdf.text ""
+   pdf.font_families.update("Open Sans" => {
+         :normal => "app/assets/fonts/OpenSans-Regular.ttf",
+         :italic => "app/assets/fonts/OpenSans-Italic.ttf",
+       })
+
+
+ total_diesel = 0 
+
+
+   ################################## INVENTARIO ##############################################################  
+ headers = []
+     table_content = []
+
+     Varillaje::TABLE_HEADERS2.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+
+
+
+ tb_text_guias = [ [{:content => "INVENTARIO     ", :font_style => :bold , :border_width => 0 },
+                                {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
+                                {:content => "" , :font_style => :bold ,:size=> 8,:border_width => 0} ],
+
+
+                            ]
+
+                pdf.table( tb_text_guias ,:position => :right,
+                                                  :width =>  pdf.bounds.width,
+                                                  :cell_style => {:height => 17}
+                                                        ) do
+
+                row(0).font_style = :bold
+                columns([0]).align = :left
+                columns([1]).align = :right
+                columns([2]).width = 135
+                columns([2]).align = :right
+                end
+            pdf.move_down 2
+
+
+    
+     nroitem=1
+
+    @product = Product.last 
+
+
+      for  detalle  in @parte_rpt3
+           row = []
+           row << detalle.fecha.strftime("%d/%m/%Y")
+           row << detalle.truck.placa  
+           row << detalle.tanque.product.name 
+           row << detalle.varilla.round(2)
+           row << ""
+          
+          total_diesel += detalle.varilla.round(2)
+
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+ row = []
+           row << ""
+           row << "TOTAL ==> " 
+           row << ""
+           row << total_diesel.round(2)
+           row << ""
+          
+          total_diesel += detalle.varilla.round(2)
+
+           table_content << row
+
+
+
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                      
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                      
+
+                                         columns([4]).align=:left
+                                         
+
+                                         
+
+                                        
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+
+
+
+   #################### COMPRAS #####################################################################
+  headers = []
+     table_content = []
+
+     Varillaje::TABLE_HEADERS2.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+
+ tb_text_guias = [ [{:content => "COMPRAS    ", :font_style => :bold , :border_width => 0 },
+                                {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
+                                {:content => "" , :font_style => :bold ,:size=> 8,:border_width => 0} ],
+
+
+                            ]
+
+                pdf.table( tb_text_guias ,:position => :right,
+                                                  :width =>  pdf.bounds.width,
+                                                  :cell_style => {:height => 17}
+                                                        ) do
+
+                row(0).font_style = :bold
+                columns([0]).align = :left
+                columns([1]).align = :right
+                columns([2]).width = 135
+                columns([2]).align = :right
+                end
+            pdf.move_down 2
+
+
+    
+     nroitem=1
+
+    @product = Product.last 
+
+
+      for  detalle  in @parte_rpt2
+           row = []
+           row << nroitem.to_s
+           row << ""
+           row << @product.get_name(detalle.product_id)
+           row << detalle.quantity.round(3)
+           row << detalle.total.round(2) 
+          
+          total_diesel += detalle.quantity.round(2)
+          
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+
+
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                      
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                      
+
+                                         columns([4]).align=:left
+                                         
+
+                                         
+
+                                        
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+
+
+
+
+   #################### VENTAS  #####################################################################
+
+
+ tb_text_guias = [ [{:content => "VENTAS   ", :font_style => :bold , :border_width => 0 },
+                                {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
+                                {:content => "" , :font_style => :bold ,:size=> 8,:border_width => 0} ],
+
+
+                            ]
+
+                pdf.table( tb_text_guias ,:position => :right,
+                                                  :width =>  pdf.bounds.width,
+                                                  :cell_style => {:height => 17}
+                                                        ) do
+
+                row(0).font_style = :bold
+                columns([0]).align = :left
+                columns([1]).align = :right
+                columns([2]).width = 135
+                columns([2]).align = :right
+                end
+            pdf.move_down 2
+
+
+     headers = []
+     table_content = []
+
+     Varillaje::TABLE_HEADERS2.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+
+     nroitem=1
+
+    @product = Product.last 
+
+
+      for  detalle  in @parte_rpt1
+           row = []
+           row << nroitem.to_s
+           row << detalle.truck.placa 
+           row << @product.get_name(detalle.product_id)
+           row << detalle.quantity.round(3)
+           row << detalle.total.round(2) 
+          
+          total_diesel -= detalle.quantity.round(2)
+          
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+
+
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                      
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                      
+
+                                         columns([4]).align=:left
+                                         
+
+                                         
+
+                                        
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+
+ #################### SALDO  #####################################################################
+     headers = []
+     table_content = []
+
+     Varillaje::TABLE_HEADERS2.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+
+ tb_text_guias = [ [{:content => "SALDO FINAL     ", :font_style => :bold , :border_width => 0 },
+                                {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
+                                {:content => "" , :font_style => :bold ,:size=> 8,:text_color=> "141000"  ,:background_color => "FFFFCC"} ],
+
+
+                            ]
+
+                pdf.table( tb_text_guias ,:position => :right,
+                                                  :width =>  pdf.bounds.width,
+                                                  :cell_style => {:height => 17}
+                                                        ) do
+
+                row(0).font_style = :bold
+                columns([0]).align = :left
+                columns([1]).align = :right
+                columns([2]).width = 135
+                columns([2]).align = :right
+                end
+            pdf.move_down 2
+
+
+    
+     nroitem=1
+
+   
+
+      for  detalle  in @parte_rpt2
+           row = []
+           row << nroitem.to_s
+           row << ""
+           row << "DIESEL "
+           row << total_diesel.round(2)
+           row << "" 
+          
+          
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+
+
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                      
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                      
+
+                                         columns([4]).align=:left
+                                         
+
+                                         
+
+                                        
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+
+
+   end
+
+
+
+
+   def build_pdf_footer9(pdf)
+
+       pdf.text ""
+       pdf.text "" 
+       
+
+    end
+   
+  ##################################3
   def reportes2 
   
     @company=Company.find(1)          
@@ -2459,6 +2900,7 @@ def reportes31
     @deliveryships = @invoice.my_deliverys 
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
+    @trucks = @company.get_trucks()
     
     if @current_user.level== "colateral"
       @tipodocumento = @company.get_documents2()
@@ -2496,7 +2938,7 @@ def reportes31
     @monedas = @company.get_monedas()
     @tipodocumento = @company.get_documents()
     @tipoventas = Tipoventum.all 
-
+ @trucks = @company.get_trucks()
 
     @ac_user = getUsername()
 
@@ -2552,6 +2994,7 @@ def reportes31
     @tipoventas = Tipoventum.all 
     @ac_user = getUsername()
     @invoice[:user_id] = getUserId()
+     @trucks = @company.get_trucks()
   end
   
   
@@ -2578,7 +3021,7 @@ def newfactura2
     @customer_d05 = @customer.d05
     @customer_d06 = @customer.d06
 
-  
+   @trucks = @company.get_trucks()
   
    if @check_product == "1"
 
@@ -2616,7 +3059,7 @@ def newfactura2
     @monedas = @company.get_monedas()
     @products = @company.get_products()
     @tarjetas = Tarjetum.all
-    
+     @trucks = @company.get_trucks()
     @locations = @company.get_locations()
     @divisions = @company.get_divisions()
   end
@@ -2644,7 +3087,7 @@ def newfactura2
     @tipofacturas = @company.get_tipofacturas() 
     @monedas = @company.get_monedas()
     @tarjetas = Tarjetum.all
-   
+    @trucks = @company.get_trucks()
     @anexo8_ncs = Anexo8.order(:tipo,:code )
     @invoice[:subtotal] = @invoice.get_total_1(items) / 1.18
     @invoice[:total]   = @invoice.get_total_1(items) 
@@ -2742,7 +3185,7 @@ def newfactura2
     @divisions = @company.get_divisions()
     @tipoventas = Tipoventum.all 
     @tarjetas = Tarjetum.all
-    
+     @trucks = @company.get_trucks()
     @invoice[:subtotal] = @invoice.get_subtotal(items)
     @invoice[:tax] = @invoice.get_tax(items, @invoice[:customer_id])
     @invoice[:total] = @invoice[:subtotal] + @invoice[:tax]
@@ -5911,9 +6354,8 @@ end
       :cuota1,:fecha_cuota1,:importe_cuota1,
       :cuota2,:fecha_cuota2,:importe_cuota2,
       :cuota3,:fecha_cuota3,:importe_cuota3,
-      :msgerror )
+      :msgerror,:truck_id )
   end
 
 end
-
 

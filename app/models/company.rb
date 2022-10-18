@@ -3721,7 +3721,38 @@
           @varilla = Varillaje.select("tanque_id").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
           return @varilla 
        end 
+
+       def  get_parte_hidro(fecha1,fecha2)
+          @varilla = Factura.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
+          return @varilla 
+       end 
+      
+      def  get_venta_hidro(fecha1,fecha2)
+          @varilla = Factura.select("factura_details.product_id,facturas.truck_id,sum(factura_details.quantity) as quantity, sum(facturas.total) as total ").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).joins("INNER JOIN factura_details ON facturas.id = factura_details.factura_id   ").group('factura_details.product_id,facturas.truck_id')
+          return @varilla 
+       end 
+              
+
+      def  get_compra_hidro(fecha1,fecha2,moneda )
+         
+           @purchases = Purchase.find_by_sql(['Select purchase_details.product_id,SUM(purchase_details.quantity ) as quantity,SUM(purchase_details.total) AS TOTAL
+            from purchase_details   
+            INNER JOIN purchases ON purchase_details.purchase_id = purchases.id
+            INNER JOIN products ON purchase_details.product_id = products.id
+            WHERE purchases.date1 >= ? and purchases.date1 <= ?  and purchases.moneda_id= ? and products.products_category_id = 1
+            GROUP BY products.products_category_id , purchase_details.product_id 
+            ORDER BY products.products_category_id  ' , "#{fecha1} 00:00:00","#{fecha2} 23:59:59", moneda ])
+          return @purchases 
+
+
+       end 
        
+      def  get_varilla_hidro(fecha1,fecha2)
+          @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
+          return @varilla 
+       end 
+                
+
        def  get_venta_detallado(fecha1,fecha2)
           @varilla =  Market.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59" ]).order(:fecha,:cod_prod)
           return @varilla 

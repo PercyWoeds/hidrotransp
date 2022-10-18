@@ -2,7 +2,7 @@ class Factura < ActiveRecord::Base
   self.per_page = 20
 
 
-  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha
+  validates_presence_of :company_id, :customer_id, :code, :user_id,:fecha, :truck_id 
 validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
 
   
@@ -15,7 +15,8 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
   belongs_to :moneda 
   belongs_to :document
   belongs_to :tipoventa 
-  belongs_to :tarjetum 
+  belongs_to :tarjetum  
+  belongs_to :truck 
 
   has_many   :deliveryship
   has_many   :delivery 
@@ -159,6 +160,8 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
     return self.payment.day 
     
   end   
+
+  
     
   def get_vencido
 

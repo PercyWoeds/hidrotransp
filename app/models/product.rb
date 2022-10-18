@@ -56,6 +56,13 @@ def self.matches(field_name, param)
     where("upper(#{field_name}) like ?", "%#{param}%")
 end
 
+
+def get_name(id)
+
+      product =  Product.find(id)
+      return product.name 
+  end   
+
 def self.import(file)
   
           CSV.foreach(file.path, headers: true, encoding:'iso-8859-1:utf-8') do |row|

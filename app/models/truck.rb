@@ -2,6 +2,7 @@ class Truck < ActiveRecord::Base
 
 validates_uniqueness_of :placa 
 
+belongs_to :varillaje 
 
 has_many :outputs
 
@@ -21,5 +22,9 @@ has_many :outputs
           Truck.create! row.to_hash 
         end
   end       
+
+
+
+
     
 end

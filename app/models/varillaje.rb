@@ -1,6 +1,9 @@
 class Varillaje < ActiveRecord::Base
     
     belongs_to :tanque
+    belongs_to :truck 
+
+    validates_presence_of :truck_id
 
     TABLE_HEADERS  = ["FECHA CORTE ",
                       "HORA CORTE",
@@ -37,7 +40,14 @@ class Varillaje < ActiveRecord::Base
                     " FIRMA "]
                     
 
-    
+    TABLE_HEADERS2  = ["ITEM ",
+                         "PLACA",   
+                        "PRODUCTO",
+                        "GLNS", 
+                       
+                        "TOTAL. "]
+
+
  def  get_compras(fecha,producto) 
 
      facturas = Purchase.where(["date2 >= ? and date2 <= ?  and tiponota <> ? " , "#{fecha} 00:00:00","#{fecha} 23:59:59","3" ])

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221012230747) do
+ActiveRecord::Schema.define(version: 20221016233137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -795,6 +795,7 @@ ActiveRecord::Schema.define(version: 20221012230747) do
     t.string   "msgerror"
     t.string   "document2"
     t.integer  "anexo8_id"
+    t.integer  "truck_id"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -2502,6 +2503,7 @@ ActiveRecord::Schema.define(version: 20221012230747) do
     t.string   "documento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "truck_id"
   end
 
   create_table "venta", force: :cascade do |t|
