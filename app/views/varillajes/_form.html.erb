@@ -6,9 +6,9 @@
       <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
 
       <% if @current_user.level = "admin" %>
-        <%= f.text_field :fecha %>
+        <%= f.date_field :fecha %>
       <% else %>
-        <%= f.text_field :fecha %>
+        <%= f.date_field :fecha %>
       <% end %>
       </div>
       <div class="field">
