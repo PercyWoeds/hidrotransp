@@ -3039,12 +3039,13 @@ def edit_multiple
 
              factura_1 = Factura.find(factura.id)
              factura_1.balance = factura_1.balance  - a.to_f   
-             factura_1.save 
+             factura_1.update_attributes(balance: factura_1.balance ) 
 
 
             puts factura.id
             puts "==>> "
             puts a 
+            puts factura_1.balance 
 
           end 
 

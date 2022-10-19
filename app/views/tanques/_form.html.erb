@@ -10,6 +10,12 @@
     <%= f.label :product_id, "Producto:" %><br>
     <%= f.collection_select :product_id, @products, :id, :name, :prompt => true %>
     </div>
+
+<div class="field">
+    <%= f.label :truck_id, "Placa :" %><br>
+    <%= f.collection_select :truck_id, @trucks, :id, :placa, :prompt => true %>
+    </div>
+
       <div class="field">
     <%= f.label :saldo_inicial, "Saldo Inicial:" %><br>
     <%= f.number_field :saldo_inicial  %>
