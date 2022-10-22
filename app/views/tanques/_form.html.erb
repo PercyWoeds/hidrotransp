@@ -1,5 +1,16 @@
 <%= simple_form_for(@tanque) do |f| %>
-  <%= f.error_notification %>
+
+  <% if @tanque.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tanque.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @tanque.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   
     <div class="field">
       <%= f.label :code, "Code:" %><br>

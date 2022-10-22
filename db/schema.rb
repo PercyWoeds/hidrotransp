@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221019190021) do
+ActiveRecord::Schema.define(version: 20221026210909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20221019190021) do
     t.string   "code_nube"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "tipo"
   end
 
   create_table "bank_acounts", force: :cascade do |t|
@@ -304,6 +305,61 @@ ActiveRecord::Schema.define(version: 20221019190021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "conductors", force: :cascade do |t|
+    t.string   "lugar"
+    t.string   "anio"
+    t.string   "licencia"
+    t.string   "categoria"
+    t.datetime "expedicion_licencia"
+    t.datetime "revalidacion_licencia"
+    t.string   "categoria_especial"
+    t.datetime "expedicion_licencia_especial"
+    t.string   "iqbf"
+    t.datetime "fecha_emision"
+    t.datetime "dni_emision"
+    t.datetime "dni_caducidad"
+    t.datetime "ap_emision"
+    t.datetime "ap_caducidad"
+    t.datetime "ape_emision"
+    t.datetime "ape_caducidad"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.integer  "employee_id"
+    t.string   "active"
+    t.integer  "employees_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "idnumber"
+    t.string   "cv"
+    t.string   "cv1"
+    t.string   "cv2"
+    t.string   "cv3"
+    t.string   "niveleducativo"
+    t.string   "nivel_educativo"
+    t.datetime "revalidacion_licencia_especial"
+    t.string   "cv_url"
+    t.string   "cv1_url"
+    t.string   "cv2_url"
+    t.string   "cv3_url"
+    t.string   "activedni"
+    t.string   "cv4"
+    t.string   "cv5"
+    t.string   "cv6"
+    t.string   "cv7"
+    t.string   "cv8"
+    t.string   "cv4_url"
+    t.string   "cv5_url"
+    t.string   "cv6_url"
+    t.string   "cv7_url"
+    t.string   "cv8_url"
+    t.string   "anio1"
+    t.string   "anio2"
+    t.string   "anio3"
+    t.string   "anio4"
+  end
+
+  add_index "conductors", ["employees_id"], name: "index_conductors_on_employees_id", using: :btree
 
   create_table "creditos", force: :cascade do |t|
     t.string   "code"
@@ -796,6 +852,7 @@ ActiveRecord::Schema.define(version: 20221019190021) do
     t.string   "document2"
     t.integer  "anexo8_id"
     t.integer  "truck_id"
+    t.string   "documento2"
   end
 
   create_table "faltantes", force: :cascade do |t|
@@ -2634,4 +2691,5 @@ ActiveRecord::Schema.define(version: 20221019190021) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "conductors", "employees"
 end

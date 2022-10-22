@@ -4,6 +4,7 @@ validates_uniqueness_of :placa
 
 belongs_to :varillaje 
 
+
 has_many :outputs
 
   def get_marcas()

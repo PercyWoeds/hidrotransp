@@ -11,18 +11,28 @@ class TanquesController < ApplicationController
   # GET /tanques/1.json
   def show
     @products = Product.where(products_category_id: 1)
+    @company = Company.find(1)
+    @trucks = @company.get_trucks()
+
   end
 
   # GET /tanques/new
   def new
     @tanque = Tanque.new
-    @products = Product.where(products_category_id: 1)
+    @products = Product.where(products_category_id: 1) 
+    @company = Company.find(1)
+    @trucks = @company.get_trucks()
+
+
     
   end
 
   # GET /tanques/1/edit
   def edit
     @products = Product.where(products_category_id: 1)
+    @company = Company.find(1)
+    @trucks = @company.get_trucks()
+
   end
 
   # POST /tanques
@@ -30,6 +40,9 @@ class TanquesController < ApplicationController
   def create
     @tanque = Tanque.new(tanque_params)
   @products = Product.where(products_category_id: 1)
+  @company = Company.find(1)
+    @trucks = @company.get_trucks()
+
     respond_to do |format|
       if @tanque.save
         format.html { redirect_to @tanque, notice: 'Tanque was successfully created.' }
@@ -44,6 +57,9 @@ class TanquesController < ApplicationController
   # PATCH/PUT /tanques/1
   # PATCH/PUT /tanques/1.json
   def update
+    @company = Company.find(1)
+    @trucks = @company.get_trucks()
+
     respond_to do |format|
       if @tanque.update(tanque_params)
         format.html { redirect_to @tanque, notice: 'Tanque was successfully updated.' }
@@ -73,6 +89,6 @@ class TanquesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tanque_params
-      params.require(:tanque).permit(:code, :product_id, :saldo_inicial, :varilla)
+      params.require(:tanque).permit(:code, :product_id, :saldo_inicial, :varilla,:truck_id)
     end
 end

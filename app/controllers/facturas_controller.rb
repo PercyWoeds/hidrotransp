@@ -2883,6 +2883,10 @@ def reportes31
     @invoice[:cuota3] = 3
 
 
+    @filters_display = "none"
+
+
+    
 
     
     @company = Company.find(params[:company_id])
@@ -2913,6 +2917,9 @@ def reportes31
     @invoice[:user_id] = getUserId()
     @invoice[:moneda_id] = 2
     @invoice[:document_id] = 3
+
+     @anexo8_ncs = Anexo8.order(:tipo,:code )
+   
 
     
   end
@@ -4248,7 +4255,6 @@ def newfactura2
 
     if @facturas_rpt.size > 0 
 
-        
         Prawn::Document.generate "app/pdf_output/rpt_pendientes.pdf", :page_layout => :landscape do |pdf|        
         pdf.font "Helvetica"
         pdf = build_pdf_header_rpt2(pdf)

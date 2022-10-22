@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listado Conductores</h1>
+
+
+
+<div class="button">
+
+<%= link_to 'Nuevo Conductor', new_conductor_path %>
+
+
+<%= link_to 'Export PDF', "/conductors/pdf/#{@company.id}" %>
+
+
+
+
+<%= link_to "Descargar Excel", conductors_path(format: "xls") %>
+
+
+</div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Lugar</th>
+      <th>Anio</th>
+      <th>Licencia</th>
+      <th>Categoria</th>
+    
+      <th>Categoria especial</th>
+     
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <% @conductors.each do |conductor| %>
+      <tr>
+        <td><%= conductor.employee.full_name2  %></td>
+        <td><%= conductor.anio %></td>
+        <td><%= conductor.licencia %></td>
+        <td><%= conductor.categoria %></td>
+
+
+
+        <td><%= conductor.categoria_especial %></td>
+      
+       
+        <td><%= link_to 'Ver', conductor %></td>
+        <td><%= link_to 'Editar', edit_conductor_path(conductor) %></td>
+
+        <%if @current_user.level="admin"%>
+
+              <td><%= link_to 'Eliminar', conductor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class="button">
+   
+
+</div>
+
+<h4>Importar Archivo conductores "*.csv"</h4>
+
+<%= form_tag import_conductors_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Importar " %>
+<% end %>
+
+

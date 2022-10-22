@@ -102,6 +102,12 @@ require 'sidekiq/web'
   resources :customer_payments
   resources :gastos 
   resources :cierres 
+ 
+
+resources :conductors do 
+   collection { post :import }
+
+  end  
 
   resources :viaticos do
     resources :viatico_details, except: [:index,:show], controller: "viaticos/viatico_details"
@@ -1195,6 +1201,11 @@ end
   match 'payrollbonis/index/:id' => 'payrollbonis#index', via: [:get, :post]  
   match 'payrollboni/new/:payroll_id' => 'payrollbonis#new', via: [:get, :post]  
   resources :payrolls 
+
+match 'conductors/pdf/:id' => 'conductors#pdf', via: [:get, :post]
+
+
+match 'conductors/excel/:id' => 'conductors#excel', via: [:get, :post]
 
 
   # Sessions

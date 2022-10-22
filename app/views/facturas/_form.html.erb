@@ -130,7 +130,29 @@
       <%= f.number_field :retencion_importe,:step => 0.01 %>
     </div>
 
+ 
+     
+    
+<div>
+  <a href="#" onclick="toggle('filters'); return false;">Notas </a>
+</div>
+<div id="filters" class="filters" style="display: <%= @filters_display %>;">
 
+
+    <div class="field">
+      <%= f.label :documento2, "Nota - Documento Modificar:", :class => "bold"  %> <br/>
+      <%= f.text_field :documento2  %>
+
+    </div>
+
+     <div class="field">
+      <%= f.label :anexo8_id,"Catalogo de Nota de Credito  " %><br />
+      <%= f.select :anexo8_id,options_from_collection_for_select(@anexo8_ncs,'id','name') %>
+    </div>
+ 
+
+
+</div>
     
      
       <div class="field" id="list_items">

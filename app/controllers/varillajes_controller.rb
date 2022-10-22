@@ -21,7 +21,7 @@ class VarillajesController < ApplicationController
     @company=Company.find(1)
     @varillaje = Varillaje.new
     @trucks = @company.get_trucks()
-    @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
+    @tanques = Tanque.select("tanque_id, tanque.products.name, tanque.trucks.placa ").joins(:product, :truck)
   end
 
   # GET /varillajes/1/edit
