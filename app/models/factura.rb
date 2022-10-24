@@ -17,12 +17,15 @@ validates :code  , uniqueness:{ scope:[:customer_id, :document_id,:moneda_id]}
   belongs_to :tipoventa 
   belongs_to :tarjetum  
   belongs_to :truck 
+  belongs_to :anexo8  
+
 
   has_many   :deliveryship
   has_many   :delivery 
   has_many   :invoice_services
   has_many   :customer_payment_details
   has_many   :factura_details 
+
   
    TABLE_HEADERS = ["TD",
                       "Documento",

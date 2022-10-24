@@ -6360,7 +6360,7 @@ end
       :cuota1,:fecha_cuota1,:importe_cuota1,
       :cuota2,:fecha_cuota2,:importe_cuota2,
       :cuota3,:fecha_cuota3,:importe_cuota3,
-      :msgerror,:truck_id )
+      :msgerror,:truck_id ,:documento2)
   end
 
 end
