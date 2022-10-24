@@ -162,7 +162,7 @@
                 </td>
                <td>
                 <% rating_id = item.id  %>
-                <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= item.balance.round(2) %>" class="tf_shorty"  readonly  />
+                <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= item.balance.round(2) * -1  %>" class="tf_shorty"    />
               </td>
           
          <% else %>
