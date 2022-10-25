@@ -63,41 +63,37 @@
     <thead>
       <tr>
         <th class="small bordered_bottom bordered_right">
-          Fecha
+          Tip.Doc.
         </th>
         <th class="small bordered_bottom bordered_right">
-          Cod.Emp
+          Fec.Emision
         </th>
         <th class="small bordered_bottom bordered_right">
-          Turno
+          Fec.Vmto
         </th>        
         <th class="small bordered_bottom bordered_right">
-          Serie 
+          Numero
         </th>
         <th class="small bordered_bottom bordered_right">
-          Número 
+          Moneda
         </th>        
-        <th class="small bordered_bottom bordered_right">
-          Placa
-        </th>
-        <th class="small bordered_bottom bordered_right">
-          Producto
-        </th>
-        <th class="small bordered_bottom bordered_right">
-          Nombre 
-        </th>
-        
-        <th class="small bordered_bottom bordered_right">
-          Cant.
-        </th>
-        <th class="small bordered_bottom bordered_right">
-          Precio
-        </th>
         <th class="small bordered_bottom bordered_right">
           Importe
         </th>
         <th class="small bordered_bottom bordered_right">
-          Importe Pre.Lista
+          Retencion
+        </th>
+        <th class="small bordered_bottom bordered_right">
+          Detraccion
+        </th>
+        
+       
+        <th class="small bordered_bottom bordered_right">
+          Saldo Pendiente
+        </th>
+       
+        <th class="small bordered_bottom bordered_right">
+          Importe    Abonar 
         </th>
         <th class="small bordered_bottom bordered_right">
           Seleccionar
@@ -162,6 +158,7 @@
                 </td>
                <td>
                 <% rating_id = item.id  %>
+
                 <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= item.balance.round(2) * -1  %>" class="tf_shorty"    />
               </td>
           
@@ -252,7 +249,7 @@ $('#check_all').change(function() {
 
 function totalIt {
 
-  ç
+  
   var input = document.getElementsByName("product");
   var total = 0;
   for (var i = 0; i < input.length; i++) {

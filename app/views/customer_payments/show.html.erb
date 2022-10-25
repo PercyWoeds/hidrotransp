@@ -101,8 +101,15 @@
       </th>
 
       <th>
-        Total
+        Total 
       </th>
+      <th>
+        Tipo Cambio 
+      </th>
+      <th>
+        Total Cambio 
+      </th>
+
 
     </tr>
   </thead>
@@ -131,6 +138,13 @@
         
         <td class="bordered_bottom bordered_right">
             <%=  @customerpayment.total     %>
+        </td>
+        <td class="bordered_bottom bordered_right">
+            <%=  @customerpayment.tipo_cambio    %>
+        </td>
+
+        <td class="bordered_bottom bordered_right">
+            <%=  @customerpayment.importe_cambio  %>
         </td>
 
       </tr>

@@ -155,6 +155,9 @@ resources :conductors do
     collection { get :rpt_redencion_1   }
     
     collection { get :rpt_ccobrar12_all   }
+    collection { get :rpt_ccobrar5_pdf   }
+    collection { get :rpt_cobranzas_pdf   }
+    
     collection { get :rpt_purchase_all   }
     
     collection { get :rpt_pago_adelantado   }
@@ -165,7 +168,7 @@ resources :conductors do
     collection { get :rit_01    }
     collection { get :newpayment  }
     collection { post :discontinue2  }
- 
+
         
   end 
     

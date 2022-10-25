@@ -1250,7 +1250,7 @@
              else
                lcbalance = c.balance * -1
                puts "cliente "
-               puts c.customerid 
+                
                a= Tempfactura.new(:year_month=> c.year_month,:customer_id => c.customer_id,:balance=>lcBalance)
                a.save 
              end

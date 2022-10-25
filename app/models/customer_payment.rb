@@ -2,7 +2,7 @@ class CustomerPayment < ActiveRecord::Base
 self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id 
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code,:tipo_cambio,:importe_cambio 
   
   belongs_to :company
   belongs_to :location
@@ -124,22 +124,24 @@ TABLE_HEADERS70 = [  "ITEM ",
                      "DIFER."]                      
 
 
+
 TABLE_HEADERS9 = ["ITEM",
                      "CLIENTE",   
-                    "=<2016",                  
-                    "Jul=< 17",
-                    "Ago-2017",             
-                    "Set-2017",
-                    "Oct-2017",
-                    "Nov-2017",
-                    "Dic-2017",
-                    "Ene-2018",             
-                    "Feb-2018",
-                    "Mar-2018",
-                    "Abr-2018",
-                    "May-2018",              
-                    "Jun-2018",
-                    "TOTAL   "]
+                    "=< 2020",
+                     "2021" ,
+                    "Ene-22",
+                    "Feb-22",
+                    "Mar-22",
+                    "Abr-22",
+                    "May-22",             
+                    "Jun-22",
+                    "Jul-22",
+                    "Ago-22",
+                    "Set-22",              
+                    "Oct-22",
+                    "Nov-22", 
+                    "Dic-22",                                        
+                    "TOTAL   ", " % "]
  
 
 
