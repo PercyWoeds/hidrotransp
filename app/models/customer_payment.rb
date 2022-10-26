@@ -2,7 +2,7 @@ class CustomerPayment < ActiveRecord::Base
 self.per_page = 20
    
   validates_presence_of :company_id, :total,:user_id,:fecha1 ,:bank_acount_id 
-  validates_uniqueness_of :code,
+  validates_uniqueness_of :code
   valudates_presence_of :tipo_cambio,:importe_cambio 
   
   belongs_to :company
