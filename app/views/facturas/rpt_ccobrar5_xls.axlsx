@@ -151,7 +151,7 @@ wb.styles do |s|
                     @total_mes10+
                     @total_mes11+
                     @total_mes12+
-                    @total_mes12
+                    @total_mes13
                                         
 
                    a =   Tmppaycustomer.new(item: nroitem , 
