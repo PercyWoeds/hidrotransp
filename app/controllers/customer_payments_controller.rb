@@ -3033,19 +3033,25 @@ def edit_multiple
   @seleccion = params[:course]
 
   detalle  =  params[:course]
+
+
   puts "customer payment "
   
   puts @customerpayment_id 
 
  for factura in @facturas 
 
+
+    puts "factura id "
     puts factura.id 
 
     puts "==>> "
 
+    puts "detalle factura importe......"
+
     a = detalle["#{factura.id}"]
 
-    puts a 
+    puts a  
 
      @customer_payment_detail  = CustomerPaymentDetail.new(total: a , descrip: "Actualizacion.", factura_id: factura.id , 
       customer_payment_id:  @customerpayment_id , factory: 0.0, ajuste: 0.0, compen: 0.0)
@@ -3053,10 +3059,18 @@ def edit_multiple
     
            if  @customer_payment_detail.save
 
-             factura_1 = Factura.find(factura.id)
-             factura_1.balance = factura_1.balance  - a.to_f   
-             factura_1.update_attributes(balance: factura_1.balance ) 
+              if a.to_f > 0 
 
+                 factura_1 = Factura.find(factura.id)
+                 factura_1.balance = factura_1.balance  - a.to_f   
+                 factura_1.update_attributes(balance: factura_1.balance ) 
+                 
+              else
+                 factura_1 = Factura.find(factura.id)
+                 factura_1.balance = factura_1.balance  + a.to_f   
+                 factura_1.update_attributes(balance: factura_1.balance ) 
+                 
+              end 
 
             puts factura.id
             puts "==>> "

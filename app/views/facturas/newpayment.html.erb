@@ -159,7 +159,12 @@
                <td>
                 <% rating_id = item.id  %>
 
-                <input type="text" name= "<%="#{rating_id}" %>" id= "<%= "#{rating_id}" %>" value="<%= item.balance.round(2) * -1  %>" class="tf_shorty"    />
+                 <% course = [] %>
+
+               <% field_value = course[item.balance.round(2)] %>
+                 <% importe_nc = item.balance.round(2)*-1 %>
+                 <%= text_field_tag("course[#{item.id}]", field_value, value:  importe_nc.to_s) %>
+
               </td>
           
          <% else %>
