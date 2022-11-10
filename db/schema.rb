@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221026210911) do
+ActiveRecord::Schema.define(version: 20221028212842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2184,6 +2184,39 @@ ActiveRecord::Schema.define(version: 20221026210911) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
+  create_table "sheet_route_details", force: :cascade do |t|
+    t.datetime "fecha"
+    t.integer  "employee_id"
+    t.float    "km_in"
+    t.float    "km_out"
+    t.float    "total"
+    t.text     "lugar"
+    t.float    "comb_km"
+    t.float    "comb_glns"
+    t.float    "mant_km"
+    t.text     "observa"
+    t.string   "references"
+    t.string   "employees"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "sheet_route_id"
+    t.integer  "sheet_routes_id"
+  end
+
+  add_index "sheet_route_details", ["sheet_routes_id"], name: "index_sheet_route_details_on_sheet_routes_id", using: :btree
+
+  create_table "sheet_routes", force: :cascade do |t|
+    t.string   "code"
+    t.datetime "fecha"
+    t.integer  "truck_id"
+    t.string   "references"
+    t.string   "trucks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.string   "processed"
+  end
+
   create_table "stocks", force: :cascade do |t|
     t.integer  "store_id"
     t.integer  "item_id"
@@ -2716,4 +2749,5 @@ ActiveRecord::Schema.define(version: 20221026210911) do
   end
 
   add_foreign_key "conductors", "employees"
+  add_foreign_key "sheet_route_details", "sheet_routes"
 end

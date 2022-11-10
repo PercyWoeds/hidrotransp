@@ -64,20 +64,17 @@ wb.styles do |s|
                      "Fec.Emision",
                      "Fec.Vmto",
                      "Dias",
-                     "Dias
-                     
-                      Vencido",
+                     "Dias Vencido",
+                     "R.U.C.",
                      "C L I E N T E ",
-                     "Pre.",
-                     "Cant.",
-                     "Mon. ",
-                     "Imp. Original
-                     Soles",
-                     "Imp. Original
-                      Dolares",
+                     "Pre.Venta.",
+                     "Cantidad.",
+                     "Moneda ",
+                     "Imp. Soles",
+                     "Imp. Dolares",
                      "Soles",
-                     "Dolares",
-                     "Detraccion",
+                     "Dolares    ",
+                     "Detraccion ",
                      "Vencido."], :style => title 
     
 
@@ -203,6 +200,7 @@ wb.styles do |s|
             product.fecha2,
             dias,
             dias_vencido,
+            product.customer.ruc,
             product.customer.name.truncate(35, omission: ' '),
             precio_ultimo,
             product.get_cantidad,
@@ -213,7 +211,7 @@ wb.styles do |s|
             lcBalanceSoles,
             lcDetraccion0,
             product.get_vencido ], 
-            :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+            :style => [cadena,cadena,date,date,cadena,currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
 
 
             nroitem = nroitem + 1
@@ -244,7 +242,46 @@ wb.styles do |s|
             "",
             @total_cliente_soles ,
             @total_cliente_dolar,"",""], 
-           :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+           :style => [cadena,cadena,date,date,cadena,currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+             sheet.add_row [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            " ",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "" ,
+            "",""], 
+           :style => [cadena,cadena,date,date,cadena,cadena,currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+
+
+
+   
+    sheet.add_row ["TD",
+                      "Documento",
+                     "Fec.Emision",
+                     "Fec.Vmto",
+                     "Dias",
+                     "Dias Vencido",
+                     "R.U.C.",
+                     "C L I E N T E ",
+                     "Pre.Venta.",
+                     "Cantidad.",
+                     "Moneda ",
+                     "Imp. Soles",
+                     "Imp. Dolares",
+                     "Soles",
+                     "Dolares    ",
+                     "Detraccion ",
+                     "Vencido."], :style => title 
+
             
             total_soles += @total_cliente_soles
             total_dolares += @total_cliente_dolar 
@@ -253,6 +290,9 @@ wb.styles do |s|
             @total_cliente_dolar = 0    
 
             lcCliente = product.customer_id
+
+
+            
 
             
             if product.get_cantidad > 0
@@ -346,6 +386,7 @@ wb.styles do |s|
             product.fecha2,
             dias,
             dias_vencido,
+            product.customer.ruc, 
             product.customer.name.truncate(35, omission: ' '),
             precio_ultimo,
             product.get_cantidad,
@@ -356,7 +397,7 @@ wb.styles do |s|
             lcBalanceSoles , 
             lcDetraccion0,
             product.get_vencido ], 
-           :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+           :style => [cadena,cadena,date,date,cadena,currency,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
 
 
 
@@ -423,7 +464,7 @@ wb.styles do |s|
             "",
             total_soles ,
             total_dolares,"",""], 
-            :style => [cadena,cadena,date,date,cadena,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
+            :style => [cadena,cadena,date,date,cadena,currency,currency,currency,currency,currency,currency,currency,currency,currency,currency,cadena]
 
 
         

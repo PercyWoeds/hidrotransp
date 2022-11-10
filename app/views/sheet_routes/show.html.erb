@@ -1,0 +1,132 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @sheet_route.code %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @sheet_route.fecha %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @sheet_route.truck_id %>
+</p>
+
+<p>
+  <strong>References:</strong>
+  <%= @sheet_route.references %>
+</p>
+
+<p>
+  <strong>Trucks:</strong>
+  <%= @sheet_route.trucks %>
+</p>
+
+
+<% nroitem = 1 %>
+
+
+<div class="button">
+<%= link_to 'Agregar Item', new_sheet_route_sheet_route_detail_path(@sheet_route) %>
+</div> 
+
+  <table> 
+
+    <%  @sheet_route_details.each do |product| %>
+    
+      <tr>
+        <td>
+
+          <%= nroitem%>
+
+          <% nroitem += 1 %>
+        </td>
+
+         <td class="small bordered_bottom bordered_right">
+             <%=product.fecha.strftime("%d/%m/%Y") %>
+             
+          </td>
+          
+
+           <td class="small bordered_bottom bordered_right">
+              <%=product.employee.name  %>
+             
+          
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+              <%=product.km_in  %>
+          
+          
+         </td>
+          <td class="small bordered_bottom bordered_right">
+            <%=product.km_out  %>
+         
+
+         </td>
+           <td class="small bordered_bottom bordered_right">
+              <%=product.total %>
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.lugar %>
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+            <%= product.comb_km %>
+          </td>
+          
+         
+          
+          <td class="small bordered_bottom bordered_right">
+             <%= product.comb_glns %>
+          </td>
+
+          <td class="small bordered_bottom bordered_right">
+          <%= product.mant_km %>
+          </td>
+          <td class="small bordered_bottom bordered_right">
+          <%= product.observa  %>
+          </td>
+
+          
+          <td><%= link_to 'Editar',  edit_sheet_route_sheet_route_detail_path(sheet_route_id: @sheet_route.id,id: product.id ) %></td>          
+          <td><%= link_to 'Eliminar',[@sheet_route,product], method: :delete, data: { confirm: 'Esta seguro?' } %></td>
+          
+      </tr>
+       
+   
+  </tbody>
+</table>
+
+   <% end %>
+<br />
+
+<p>
+  <strong>Seller:</strong>
+  <%= link_to @sheet_route.user.username, @sheet_route.user %>
+</p>
+
+<%= hr() %>
+
+<div class="button">
+
+  <%= link_to 'Exportar to PDF', "/viaticos/pdf/#{@sheet_route.id}.pdf" %>  
+  
+ <% if @sheet_route.processed == "1" %> 
+
+ <% %>
+
+ <% else %>
+
+  <%= link_to 'Procesar', "/viaticos/do_process/#{@sheet_route.id}" %>
+
+ <% end %> 
+  
+<%= link_to 'Regresar', sheet_routes_path %>
+
+
+</div>

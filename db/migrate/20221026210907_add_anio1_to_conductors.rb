@@ -4,5 +4,6 @@ class AddAnio1ToConductors < ActiveRecord::Migration
     add_column :conductors, :anio2, :string
     add_column :conductors, :anio3, :string
     add_column :conductors, :anio4, :string
+    
   end
 end

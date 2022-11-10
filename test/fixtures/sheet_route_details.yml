@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2022-10-28 11:38:23
+  employee_id: 1
+  km_in: 1.5
+  km_out: 1.5
+  total: 1.5
+  lugar: MyText
+  comb_km: 1.5
+  comb_glns: 1.5
+  mant_km: 1.5
+  observa: MyText
+  references: MyString
+  employees: MyString
+
+two:
+  fecha: 2022-10-28 11:38:23
+  employee_id: 1
+  km_in: 1.5
+  km_out: 1.5
+  total: 1.5
+  lugar: MyText
+  comb_km: 1.5
+  comb_glns: 1.5
+  mant_km: 1.5
+  observa: MyText
+  references: MyString
+  employees: MyString

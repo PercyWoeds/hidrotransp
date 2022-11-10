@@ -1,0 +1,28 @@
+<%= simple_form_for(@sheet_route) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+       <div class="field">
+        <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+        <%= f.date_field :fecha, value:   Date.today %>
+      </div>
+
+
+    <div class="field">
+      <%= f.label :truck_id ,"Placa:"%><br />
+      <%= f.select :truck_id, options_from_collection_for_select(@trucks,'id','placa') %>    
+    </div>
+
+
+   
+
+  </div>
+
+
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

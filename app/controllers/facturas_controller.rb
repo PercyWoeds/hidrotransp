@@ -12,7 +12,6 @@ class FacturasController < ApplicationController
     
     require "open-uri"
 
-
   
 def rpt_cobranzas_pdf
     
@@ -1463,7 +1462,6 @@ def reportes14
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2] 
   
-
     @company.actualizar_fecha2
     @company.actualizar_detraccion 
 

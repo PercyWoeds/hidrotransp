@@ -1,0 +1,68 @@
+<%= simple_form_for(@sheet_route_detail) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+       <div class="field">
+        <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
+        <%= f.date_field :fecha, value:   Date.today %>
+      </div>
+
+    <div class="field">
+      <%= f.label :employee_id ,"Empleado:"%><br />
+      <%= f.select :employee_id, options_from_collection_for_select(@employees,'id','full_name2') %>    
+    </div>
+
+
+      <div class="field">
+      <%= f.label :km_in, "Km. Entrada: ", :class => "bold" %><br />
+      <%= f.number_field :km_in,:step => 0.01 %>
+    </div>
+
+
+    
+      <div class="field">
+      <%= f.label :km_out, "Km. Salida : ", :class => "bold" %><br />
+      <%= f.number_field :km_out,:step => 0.01 %>
+    </div>
+    
+
+
+      <div class="field">
+      <%= f.label :total, "Total : ", :class => "bold" %><br />
+      <%= f.number_field :total ,:step => 0.01 %>
+    </div>
+
+   <div class="field">
+      <%= f.label :lugar , "Lugar :", :class => "bold" %><br />
+      <%= f.text_field :lugar   %>
+    </div>
+ <div class="field">
+      <%= f.label :comb_km, "Combo.Km.: ", :class => "bold" %><br />
+      <%= f.number_field :comb_km,:step => 0.01 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :comb_glns, "Combo.Glns .: ", :class => "bold" %><br />
+      <%= f.number_field :comb_glns,:step => 0.01 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :mant_km ,"Mantenimiento.Km.:", :class => "bold" %><br />
+      <%= f.number_field :mant_km,:step => 0.01 %>
+    </div>
+
+     <div class="field">
+      <%= f.label :observa, "Observa: ", :class => "bold" %><br />
+      <%= f.number_field :observa,:step => 0.01 %>
+    </div>
+
+
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

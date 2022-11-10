@@ -4,6 +4,8 @@ require 'sidekiq/web'
 
   Mnygo::Application.routes.draw do
 
+  resources :sheet_route_details
+  resources :sheet_routes
   resources :abastes
   resources :anexo8s
   resources :devols
@@ -418,9 +420,7 @@ end
   end 
  
 
-
- 
-  resources :payrolls do   
+resources :payrolls do   
   
   resources :payroll_details, except: [:index,:show,:editmultiple], controller: "payrolls/payroll_details"do 
     collection do 
@@ -428,6 +428,15 @@ end
       put :updatemultiple      
     end 
  end
+end 
+
+ 
+resources :sheet_routes do   
+  
+  resources :sheet_route_details, except: [:index,:show ], controller: "sheet_routes/sheet_route_details"do 
+     
+ end
+ 
 end 
 
   #Manifiesto busqueda de guias
