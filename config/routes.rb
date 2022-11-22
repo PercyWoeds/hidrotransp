@@ -433,9 +433,8 @@ end
  
 resources :sheet_routes do   
   
-  resources :sheet_route_details, except: [:index,:show ], controller: "sheet_routes/sheet_route_details"do 
-     
- end
+  resources :sheet_route_details, except: [:index,:show ], controller: "sheet_routes/sheet_route_details"
+  
  
 end 
 
@@ -682,6 +681,11 @@ end
   match 'viaticos/reportxls/:company_id' => 'viaticos#reportxls', via: [:get]
   
   resources :viaticos 
+
+  match 'sheet_routes/pdf/:id' => 'sheet_routes#pdf', via: [:get, :post]
+  match 'sheet_routes/do_process/:id' => 'sheet_routes#do_process', via: [:get, :post]
+
+   resources :sheet_routes
 # lgv
   
   match 'lgvs/list_items/:company_id' => 'lgvs#list_items', via: [:get, :post]

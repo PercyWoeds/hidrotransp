@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Sheet Routes</h1>
+<h1>Listado Hoja de Ruta</h1>
 
 <table>
   <thead>
@@ -8,9 +8,9 @@
       <th>Code</th>
       <th>Fecha</th>
       <th>Truck</th>
-      <th>References</th>
-      <th>Trucks</th>
-      <th colspan="3"></th>
+      <th>Procesado </th>
+    
+      <th colspan="3">Opciones</th>
     </tr>
   </thead>
 
@@ -19,12 +19,23 @@
       <tr>
         <td><%= sheet_route.code %></td>
         <td><%= sheet_route.fecha %></td>
-        <td><%= sheet_route.truck_id %></td>
-        <td><%= sheet_route.references %></td>
-        <td><%= sheet_route.trucks %></td>
-        <td><%= link_to 'Show', sheet_route %></td>
-        <td><%= link_to 'Edit', edit_sheet_route_path(sheet_route) %></td>
-        <td><%= link_to 'Destroy', sheet_route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= sheet_route.truck.placa  %></td>
+        <td class="bordered_right bordered_bottom <%= sheet_route.processed_color %>">
+            <%= sheet_route.get_processed_short %>
+        </td>
+
+
+        <td><%= link_to 'Ver', sheet_route %></td>
+        
+        <% if sheet_route.processed =="" || sheet_route.processed == nil %>
+
+        <td><%= link_to 'Editar', edit_sheet_route_path(sheet_route) %></td>
+
+        <td><%= link_to 'Eliminar', sheet_route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <% end %>
+
+
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +43,7 @@
 
 <br>
 
-<%= link_to 'New Sheet route', new_sheet_route_path %>
+
+<div class="button">
+<%= link_to 'Nuevo ', new_sheet_route_path %>
+</div>

@@ -649,10 +649,9 @@ def build_pdf_header9(pdf)
 
 
     pdf.font "Helvetica" , :size => 8
-     image_path = "#{Dir.pwd}/public/images/LOGOHIDRO2.jpg"
+    
+    image_path = "#{Dir.pwd}/public/images/LOGOHIDRO2.jpg"
 
-   
-  
       table_content = ([ [{:image => image_path, :rowspan => 3 }, 
        {:content =>"SISTEMA DE GESTION INTEGRADO",:rowspan => 2, :valign => :center },"CODIGO ","NN"], 
          ["VERSION: ","4"], 
@@ -2756,6 +2755,7 @@ def reportes31
 
     flash[:notice] = "The invoice order has been processed."
     redirect_to @invoice
+    
   end
 
   

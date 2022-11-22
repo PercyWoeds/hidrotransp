@@ -94,10 +94,11 @@ self.per_page = 20
                     "TOTAL   "]
 
  TABLE_HEADERS7 = [  "ITEM ",
+                     "FECHA", 
                      "COMPRO",
                      "CUENTA",
                      "BANCO ",
-                     "FECHA",        
+                     "FEC.DOC.",        
                      "FACTURA ",             
                     "CLIENTE ",   
                     "IMPORTE",

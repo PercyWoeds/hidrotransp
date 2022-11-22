@@ -1,8 +1,21 @@
-<%= simple_form_for(@sheet_route_detail) do |f| %>
-  <%= f.error_notification %>
+
+<% if @sheet_route_detail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@sheet_route_detail.errors.count, "error") %> prohibited this viatico from being saved:</h2>
+    <ul>
+    <% @sheet_route_detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= hr() %>
+
+<%= simple_form_for [@sheet_route, @sheet_route_detail] do |f| %>
+
 
   <div class="form-inputs">
-
 
        <div class="field">
         <%= f.label :fecha , "Fecha *", :class => "bold" %><br />
@@ -14,21 +27,16 @@
       <%= f.select :employee_id, options_from_collection_for_select(@employees,'id','full_name2') %>    
     </div>
 
-
       <div class="field">
       <%= f.label :km_in, "Km. Entrada: ", :class => "bold" %><br />
       <%= f.number_field :km_in,:step => 0.01 %>
     </div>
 
-
-    
       <div class="field">
       <%= f.label :km_out, "Km. Salida : ", :class => "bold" %><br />
       <%= f.number_field :km_out,:step => 0.01 %>
     </div>
     
-
-
       <div class="field">
       <%= f.label :total, "Total : ", :class => "bold" %><br />
       <%= f.number_field :total ,:step => 0.01 %>

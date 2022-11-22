@@ -3,7 +3,7 @@ class Truck < ActiveRecord::Base
 validates_uniqueness_of :placa 
 
 belongs_to :varillaje 
-
+belongs_to :sheet_route 
 
 has_many :outputs
 

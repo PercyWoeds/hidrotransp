@@ -22,6 +22,8 @@ class Viaticos::ViaticoDetailsController < ApplicationController
     @cajas = Caja.all      
     @employees = @company.get_employees 
     @tipomov = Tipomov.all 
+
+    
   end
 
   # GET /viatico_details/new
