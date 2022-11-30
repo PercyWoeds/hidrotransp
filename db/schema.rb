@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221122160659) do
+ActiveRecord::Schema.define(version: 20221125204141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1583,6 +1583,21 @@ ActiveRecord::Schema.define(version: 20221122160659) do
     t.float    "asigfamiliar"
   end
 
+  create_table "parte_frees", force: :cascade do |t|
+    t.integer  "tanque_id"
+    t.float    "inicial"
+    t.float    "compra"
+    t.float    "venta"
+    t.float    "abaste"
+    t.float    "abaste2"
+    t.float    "stock_final"
+    t.float    "medicion"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "truck_id"
+    t.string   "name"
+  end
+
   create_table "payment_methods", force: :cascade do |t|
     t.string   "name"
     t.string   "internal_type"
@@ -2717,6 +2732,7 @@ ActiveRecord::Schema.define(version: 20221122160659) do
     t.integer  "destino_id"
     t.string   "compro"
     t.integer  "tipomov_id"
+    t.datetime "fecha2"
   end
 
   create_table "viaticos", force: :cascade do |t|

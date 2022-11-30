@@ -7,7 +7,7 @@ class VarillajesController < ApplicationController
   # GET /varillajes
   # GET /varillajes.json
   def index
-    @varillajes = Varillaje.all.order(:fecha)
+    @varillajes = Varillaje.all.order(:fecha,:tanque_id)
   end
 
   # GET /varillajes/1
@@ -20,28 +20,44 @@ class VarillajesController < ApplicationController
   def new
     @company=Company.find(1)
     @varillaje = Varillaje.new
+    @varillaje[:fecha] = Date.today
+    
     @trucks = @company.get_trucks()
-    @tanques = Tanque.select("tanque_id, tanque.products.name, tanque.trucks.placa ").joins(:product, :truck)
+    @tanques = Tanque.find_by_sql(["SELECT   tanques.id, concat(trucks.placa,products.name) as name,tanques.truck_id   
+         FROM tanques,products , trucks
+         WHERE tanques.product_id = products.id and tanques.truck_id = trucks.id " ])
+
+  
   end
 
   # GET /varillajes/1/edit
   def edit
       @company=Company.find(1)
  
-    @trucks = @company.get_trucks()
-      @tanques = Tanque.joins(:product).select("tanques.id, products.name ")
+    @trucks = @company.get_trucks()    
+    @tanques = Tanque.find_by_sql(["SELECT   tanques.id, concat(trucks.placa,products.name) as name   
+         FROM tanques,products , trucks
+         WHERE tanques.product_id = products.id and tanques.truck_id = trucks.id " ])
+    
   end
 
   # POST /varillajes
   # POST /varillajes.json
   def create
-    @tanques = Tanque.all
+    @tanques = Tanque.all 
     @varillaje = Varillaje.new(varillaje_params)
       @company=Company.find(1)
    
     @trucks = @company.get_trucks()
 
-    @varillaje[:inicial] = 0 
+    @tanque_in = Tanque.find_by( id: @varillaje.tanque_id,truck_id: @varillaje.truck_id)
+
+
+    puts "varilla in "
+    puts  @tanque_in.varilla 
+
+
+    @varillaje[:inicial] = @tanque_in.saldo_inicial  
     @varillaje[:compras] = 0
     @varillaje[:directo] = 0
     @varillaje[:consumo] = 0
@@ -52,9 +68,16 @@ class VarillajesController < ApplicationController
     respond_to do |format|
       if @varillaje.save
         
-        @tanque_up = Tanque.find_by(@varillaje.tanque_id,@varillaje.truck_id)
-        @tanque_up.varilla = @varillaje[:varilla] 
-        @tanque_up.save
+        @tanque_up = Tanque.find_by( id: @varillaje.tanque_id,truck_id: @varillaje.truck_id)
+
+        if !@tanque_up.nil? 
+           @tanque_up.varilla = @varillaje[:varilla] 
+        
+          @tanque_up.save
+
+        else
+         
+        end 
     
         format.html { redirect_to @varillaje, notice: 'Varillaje was successfully created.' }
         format.json { render :show, status: :created, location: @varillaje }
@@ -65,8 +88,7 @@ class VarillajesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /varillajes/1
-  # PATCH/PUT /varillajes/1.json
+  # PATCH/PUT /varillajes/1  # PATCH/PUT /varillajes/1.json
   def update
     
      @company=Company.find(1)

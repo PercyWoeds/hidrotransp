@@ -3,7 +3,7 @@ class Varillaje < ActiveRecord::Base
     belongs_to :tanque
     belongs_to :truck 
 
-    validates_presence_of :truck_id
+    validates_presence_of :truck_id,:tanque_id 
 
     TABLE_HEADERS  = ["FECHA CORTE ",
                       "HORA CORTE",

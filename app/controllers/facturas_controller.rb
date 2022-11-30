@@ -606,14 +606,21 @@ end
     @company=Company.find(1)          
     @fecha1 = params[:fecha1]    
     @fecha2 = params[:fecha2]    
-    
+    @parte_rpt0 = @company.get_inicia_hidro
+
     @parte_rpt1 = @company.get_venta_hidro(@fecha1,@fecha2)
     @parte_rpt2 = @company.get_compra_hidro(@fecha1,@fecha2,2)
     @parte_rpt3 = @company.get_varilla_hidro(@fecha1,@fecha2)
 
 
 
-        
+
+
+
+
+
+
+
 
     case params[:print]
       when "To PDF" then 
@@ -723,31 +730,27 @@ def build_pdf_header9(pdf)
      end
 
      table_content << headers
-
-
-
- tb_text_guias = [ [{:content => "INVENTARIO     ", :font_style => :bold , :border_width => 0 },
+     tb_text_guias = [ [{:content => "INVENTARIO INICIAL   ", :font_style => :bold , :border_width => 0 },
                                 {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
                                 {:content => "" , :font_style => :bold ,:size=> 8,:border_width => 0} ],
-
-
                             ]
 
-                pdf.table( tb_text_guias ,:position => :right,
-                                                  :width =>  pdf.bounds.width,
-                                                  :cell_style => {:height => 17}
-                                                        ) do
+    pdf.table( tb_text_guias ,:position => :right,
+                                  :width =>  pdf.bounds.width,
+                                  :cell_style => {:height => 17}
+                                        ) do
 
-                row(0).font_style = :bold
-                columns([0]).align = :left
-                columns([1]).align = :right
-                columns([2]).width = 135
-                columns([2]).align = :right
-                end
-            pdf.move_down 2
+    row(0).font_style = :bold
+    columns([0]).align = :left
+    columns([1]).align = :right
+    columns([2]).width = 135
+    columns([2]).align = :right
+    end
+
+    pdf.move_down 2
 
 
-    
+    total_diesel = 0 
      nroitem=1
 
     @product = Product.last 
@@ -758,24 +761,30 @@ def build_pdf_header9(pdf)
            row << detalle.fecha.strftime("%d/%m/%Y")
            row << detalle.truck.placa  
            row << detalle.tanque.product.name 
-           row << detalle.varilla.round(2)
+           
+           row << detalle.inicial.round(2)
            row << ""
+
+
           
-          total_diesel += detalle.varilla.round(2)
+          total_diesel += detalle.inicial.round(2)
 
            table_content << row
        
            nroitem=nroitem + 1
        end
        
- row = []
+           row = []
            row << ""
            row << "TOTAL ==> " 
            row << ""
            row << total_diesel.round(2)
            row << ""
           
+          if detalle 
           total_diesel += detalle.varilla.round(2)
+
+        end 
 
            table_content << row
 
@@ -1052,7 +1061,105 @@ def build_pdf_header9(pdf)
      pdf.move_down 10      
      pdf
 
+     ################################## INVENTARIO ##############################################################  
+ headers = []
+     table_content = []
 
+     Varillaje::TABLE_HEADERS2.each do |header|
+       cell = pdf.make_cell(:content => header)
+       cell.background_color = "FFFFCC"
+       headers << cell
+     end
+
+     table_content << headers
+     tb_text_guias = [ [{:content => "INVENTARIO FINAL   ", :font_style => :bold , :border_width => 0 },
+                                {:content => " " , :font_style => :bold ,:size=> 8, :border_width => 0 } , 
+                                {:content => "" , :font_style => :bold ,:size=> 8,:border_width => 0} ],
+                            ]
+
+    pdf.table( tb_text_guias ,:position => :right,
+                                  :width =>  pdf.bounds.width,
+                                  :cell_style => {:height => 17}
+                                        ) do
+
+    row(0).font_style = :bold
+    columns([0]).align = :left
+    columns([1]).align = :right
+    columns([2]).width = 135
+    columns([2]).align = :right
+    end
+
+    pdf.move_down 2
+
+
+    total_diesel = 0 
+     nroitem=1
+
+    @product = Product.last 
+
+
+      for  detalle  in @parte_rpt3
+           row = []
+           row << detalle.fecha.strftime("%d/%m/%Y")
+           row << detalle.truck.placa  
+           row << detalle.tanque.product.name 
+           
+           row << detalle.inicial.round(2)
+           row << ""
+
+
+          
+          total_diesel += detalle.inicial.round(2)
+
+           table_content << row
+       
+           nroitem=nroitem + 1
+       end
+       
+           row = []
+           row << ""
+           row << "TOTAL ==> " 
+           row << ""
+           row << total_diesel.round(2)
+           row << ""
+          
+          if detalle 
+          total_diesel += detalle.varilla.round(2)
+
+        end 
+
+           table_content << row
+
+
+
+
+
+     result = pdf.table table_content, {:position => :center,
+                                       :header => true,
+                                       :width => pdf.bounds.width
+                                       } do 
+                                         columns([0]).align=:center
+                                      
+                                         columns([1]).align=:left
+                                         columns([2]).align=:left
+                                         columns([3]).align=:left 
+                                      
+
+                                         columns([4]).align=:left
+                                         
+
+                                         
+
+                                        
+                                       end
+
+     pdf.move_down 10      
+     pdf
+
+
+
+
+   #################### COMPRAS #####################################################################
 
    end
 
@@ -2623,9 +2730,6 @@ def reportes31
           cantidad0 = 0
           cantidad0 = item.importe.to_f / item.precio.to_f
               
-     
-            
-          
           new_invoice_detail = FacturaDetail.new(factura_id: @factura_id  ,sellvale_id: item.id , product_id: b.id ,price: preciolista, price_discount: precio_descto, quantity: cantidad0,total: @importe )
           
           if new_invoice_detail.save

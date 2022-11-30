@@ -11,10 +11,12 @@
         <%= f.date_field :fecha %>
       <% end %>
       </div>
+      
       <div class="field">
       <%= f.label :tipo , "Tanque :", :class => "bold" %><br />
       <%= f.collection_select :tanque_id, @tanques, :id, :name ,:prompt => true %>
       </div>
+
       <div class="field">
       <%= f.label :truck_id, "Vehiculo de Despacho:", :class => "bold" %><br />
       <%= f.collection_select :truck_id, @trucks, :id, :placa  ,:prompt => true %>

@@ -191,6 +191,8 @@ wb.styles do |s|
               lcDetraccion0 = product.detraccion 
          
             end
+
+
             
 
             sheet.add_row [
@@ -234,6 +236,8 @@ wb.styles do |s|
             "",
             "",
             "",
+            "",
+            
             "TOTALES POR CLIENTE=>",
             "",
             "",
@@ -291,7 +295,9 @@ wb.styles do |s|
 
             lcCliente = product.customer_id
 
-
+  dias = (product.fecha2.to_date - product.fecha.to_date).to_i           
+            dias_vencido = (product.fecha2.to_date - Date.today).to_i 
+            
             
 
             
@@ -425,6 +431,8 @@ wb.styles do |s|
             "",
             "",
             "",
+            "",
+            
             "TOTALES POR CLIENTE=>",
             "",
             "",
@@ -456,6 +464,7 @@ wb.styles do |s|
             "",
             "",
             "",
+             "",
             "TOTALES  =>",
             "",
             "",

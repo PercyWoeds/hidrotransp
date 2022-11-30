@@ -3733,6 +3733,14 @@
           @varilla = Factura.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).group("tanque_id")
           return @varilla 
        end 
+
+
+      def  get_inicia_hidro
+          @varilla = Tanque.all 
+
+
+          return @varilla 
+       end 
       
       def  get_venta_hidro(fecha1,fecha2)
           @varilla = Factura.select("factura_details.product_id,facturas.truck_id,sum(factura_details.quantity) as quantity, sum(facturas.total) as total ").where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).joins("INNER JOIN factura_details ON facturas.id = factura_details.factura_id   ").group('factura_details.product_id,facturas.truck_id')
@@ -3755,7 +3763,7 @@
        end 
        
       def  get_varilla_hidro(fecha1,fecha2)
-          @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ])
+          @varilla = Varillaje.where(["fecha >= ? and fecha <= ? ", "#{fecha1} 00:00:00","#{fecha2} 23:59:59"  ]).order(:fecha,:tanque_id)
           return @varilla 
        end 
                 

@@ -6,11 +6,13 @@
   <thead>
     <tr>
       <th>Tanque</th>
+      <th>Placa </th>
+      
       <th>Product</th>
       <th>Inicial</th>
       <th>Compras</th>
       <th>Directo</th>
-      <th>Consumo</th>
+    
       <th>Transfe</th>
       <th>Saldo</th>
       <th>Varilla</th>
@@ -25,11 +27,13 @@
     <% @varillajes.each do |varillaje| %>
       <tr>
         <td><%= varillaje.tanque.code %></td>
+        <td><%= varillaje.truck.placa  %></td>
         <td><%= varillaje.tanque.product.name %></td>
+        
         <td><%= varillaje.inicial %></td>
         <td><%= varillaje.compras %></td>
         <td><%= varillaje.directo %></td>
-        <td><%= varillaje.consumo %></td>
+      
         <td><%= varillaje.transfe %></td>
         <td><%= varillaje.saldo %></td>
         <td><%= varillaje.varilla %></td>

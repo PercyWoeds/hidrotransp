@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tanque_id: 1
+  inicial: 1.5
+  compra: 1.5
+  venta: 1.5
+  abaste: 1.5
+  abaste2: 1.5
+  stock_final: 1.5
+  medicion: 1.5
+
+two:
+  tanque_id: 1
+  inicial: 1.5
+  compra: 1.5
+  venta: 1.5
+  abaste: 1.5
+  abaste2: 1.5
+  stock_final: 1.5
+  medicion: 1.5

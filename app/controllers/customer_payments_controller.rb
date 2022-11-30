@@ -2238,7 +2238,9 @@ class CustomerPaymentsController < ApplicationController
                                           columns([4]).align=:right
                                           columns([5]).align=:right
                                           columns([6]).align=:left                                           
-                                          columns([7]).align=:right                                          
+                                          columns([7]).align=:right       
+                                          columns([8]).align=:right       
+                                                                             
                                         end
           pdf.text "" 
           pdf 
