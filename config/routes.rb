@@ -104,6 +104,19 @@ require 'sidekiq/web'
   resources :customer_payments
   resources :gastos 
   resources :cierres 
+
+  resources :assistances 
+  resources :vacations 
+  
+  resources :inasists
+
+
+  resources :assistances do 
+       collection { get :search }
+       collection { post :import }
+  end 
+
+
  
 
 resources :conductors do 
@@ -169,7 +182,11 @@ resources :conductors do
     collection { get :cuadre02   }
     collection { get :rit_01    }
     collection { get :newpayment  }
-    collection { post :discontinue2  }
+
+    collection { get  :reporte_asistencia1 }
+
+    collection { get  :reporte_asistencia2 }
+    collection { get  :reporte_asistencia3 }
 
         
   end 
@@ -621,6 +638,21 @@ end
   match 'invoices/pdf/:id' => 'invoices#pdf', via: [:get, :post]
   match 'companies/invoices/:company_id' => 'invoices#list_invoices', via: [:get, :post]
   resources :invoices
+
+
+   match 'assistances/index/1' => 'assistances#index', via: [:get, :post]
+  
+  match 'assistances/generar/:id' => 'assistances#generar', via: [:get, :post]
+  match 'assistances/generar1/:id' => 'assistances#generar1', via: [:get, :post]
+  match 'assistances/generar2/:id' => 'assistances#generar2', via: [:get, :post]
+  match 'assistances/generar3/:id' => 'assistances#generar3', via: [:get, :post]
+
+
+  match 'assistances/do_process/:id' => 'assistances#do_process', via: [:get, :post]
+  resources :assistances
+
+# Guias
+
 
 # Invoices
   match 'output/add_kit/:company_id' => 'outputs#add_kit', via: [:get, :post]

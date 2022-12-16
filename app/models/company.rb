@@ -37,7 +37,27 @@
           
        end 
        
-    
+    def get_employees0()
+     employees =  Employee.where(:active => "1").order(:full_name2)
+     return employees
+  end    
+
+
+
+ def get_inasists
+   
+   @inasists = Inasist.all.order(:id)
+   return @inasists 
+ end 
+
+ def get_inasists2
+   
+   @inasists = Inasist.where("id <> 1")
+   return @inasists 
+ end 
+
+ 
+ 
        def get_cliente(id)
          @dato = Customer.find(id)
          return @dato 

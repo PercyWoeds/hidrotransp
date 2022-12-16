@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221125204141) do
+ActiveRecord::Schema.define(version: 20221216161702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,27 @@ ActiveRecord::Schema.define(version: 20221125204141) do
     t.datetime "updated_at", null: false
     t.string   "tipo"
   end
+
+  create_table "assistances", force: :cascade do |t|
+    t.string   "departamento"
+    t.string   "nombre"
+    t.string   "nro"
+    t.datetime "fecha"
+    t.string   "equipo"
+    t.string   "cod_verificacion"
+    t.string   "num_tarjeta"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.datetime "hora_efectivo"
+    t.string   "observacion"
+    t.integer  "inasist_id"
+    t.integer  "employee_id"
+    t.datetime "hora_efectivo2"
+    t.datetime "hora1"
+    t.datetime "hora2"
+  end
+
+  add_index "assistances", ["inasist_id"], name: "index_assistances_on_inasist_id", using: :btree
 
   create_table "bank_acounts", force: :cascade do |t|
     t.string   "number"
@@ -930,6 +951,13 @@ ActiveRecord::Schema.define(version: 20221125204141) do
   add_index "histories", ["created_at"], name: "index_histories_on_created_at", using: :btree
   add_index "histories", ["historiable_id"], name: "index_histories_on_historiable_id", using: :btree
   add_index "histories", ["user_id"], name: "index_histories_on_user_id", using: :btree
+
+  create_table "inasists", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "instruccions", force: :cascade do |t|
     t.text     "description1"
@@ -2612,6 +2640,15 @@ ActiveRecord::Schema.define(version: 20221125204141) do
     t.integer  "users"
   end
 
+  create_table "vacations", force: :cascade do |t|
+    t.integer  "employee_id"
+    t.datetime "fecha1"
+    t.datetime "fecha2"
+    t.text     "observa"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "valors", force: :cascade do |t|
     t.string   "name"
     t.text     "comments"
@@ -2765,6 +2802,7 @@ ActiveRecord::Schema.define(version: 20221125204141) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "assistances", "inasists"
   add_foreign_key "conductors", "employees"
   add_foreign_key "sheet_route_details", "sheet_routes"
 end

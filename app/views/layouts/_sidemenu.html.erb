@@ -66,7 +66,7 @@
                 <div id="cards-wrapper" class="cards-wrapper row">
                     
                       
-            <%if @current_user.level == "parte" || @current_user.level == "admin"|| @current_user.level == "playa" %>
+            <%if @current_user.level == "parte" || @current_user.level == "admin" || @current_user.level == "playa"  || @current_user.level == "operaciones" %>
 
                         <div class="item item-green col-md-4 col-sm-6 col-xs-6">
                             <div class="item-inner">
@@ -104,7 +104,7 @@
 
                     <% end %>
 
-                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" || @current_user.level == "parte" %>     
+                    <%if @current_user.level == "almacen" || @current_user.level == "admin" || @current_user.level == "compras" || @current_user.level == "parte"  || @current_user.level == "operaciones" %>     
 
                         <div class="item item-pink item-2 col-md-4 col-sm-6 col-xs-6">
                             <div class="item-inner">

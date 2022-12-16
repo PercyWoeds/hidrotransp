@@ -2358,6 +2358,7 @@ def rpt_factura_all
     @fecha2 = params[:fecha2]    
     @moneda = params[:moneda_id]    
   
+  
     Sellvale.where(["substring(serie,1,1)=? and fecha>=? and fecha<=? ","B", "#{@fecha1} 00:00:00","#{@fecha2} 23:59:59"]).update_all(importe2:nil)
       
     @facturas_rpt = @company.get_facturas_day(@fecha1,@fecha2,@moneda)          
@@ -4060,6 +4061,7 @@ def newfactura2
             row << sprintf("%.2f",(precio_ultimo.round(2)).to_s)            
             row << product.get_cantidad
             @total_cliente_qty    +=product.get_cantidad
+            
             
             row << product.moneda.symbol  
 
@@ -7033,6 +7035,130 @@ def newpayment
 def discontinue2
   @products = Factura.find(params[:product_ids])
 end
+
+
+
+
+ #Process an invoice
+  def reporte_asistencia1
+  
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+   
+
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_inasists2       
+
+    
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_1.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_st_1'
+      else render action: "index"
+    end
+  end
+
+ ##fin imprimir pdf facturas
+
+
+
+ #Process an invoice
+  def reporte_asistencia2
+  
+
+    $lcFacturasall = '1'
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @check_empleado = params[:check_empleado]
+   
+  @empleado = params[:employee_id]
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_inasists         
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_2.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_asistencia_2'
+      else render action: "index"
+    end
+  end
+
+
+
+ #Process an invoice
+def reporte_asistencia3
+
+    @company=Company.find(1)          
+    @fecha1 = params[:fecha1]    
+    @fecha2 = params[:fecha2]    
+    @check_empleado = params[:check_empleado]
+   
+    @empleado = params[:employee_id]
+    @current_user_id = current_user.id 
+    
+    @conceptos  = @company.get_asistencia_resumen(@fecha1,@fecha2)         
+    
+    case params[:print]
+      when "To PDF" then 
+        begin 
+         render  pdf: "Facturas ",template: "assistances/reporte_3.pdf.erb",locals: {:facturas => @conceptos},
+         :header => {
+           :spacing => 5,
+                           :html => {
+                     :template => 'layouts/pdf-header5.html',
+                           right: '[page] of [topage]'
+                  }
+
+               },
+
+               :footer => { :html => { template: 'layouts/pdf-footers.html' }       }  ,   
+               :margin => {bottom: 35} 
+
+        end   
+      when "To Excel" then render xlsx: 'rpt_asistencia_3'
+      else render action: "index"
+    end
+  end
+
+
+
 
 
 
