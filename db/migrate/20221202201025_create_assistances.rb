@@ -10,6 +10,9 @@ class CreateAssistances < ActiveRecord::Migration
       t.string :num_tarjeta
 
       t.timestamps null: false
+  
+     add_reference :assistances, :inasist, index: true, foreign_key: true
+
     end
   end
 end
