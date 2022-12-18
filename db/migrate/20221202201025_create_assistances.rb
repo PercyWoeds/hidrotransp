@@ -11,8 +11,7 @@ class CreateAssistances < ActiveRecord::Migration
 
       t.timestamps null: false
   
-     add_reference :assistances, :inasist, index: true, foreign_key: true
-
+    
     end
   end
 end
