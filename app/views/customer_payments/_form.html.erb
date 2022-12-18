@@ -56,9 +56,12 @@
     <div>
       <strong>Total a Cancelar :</strong><br />
       <span id="ac_item_total">0.00</span>
-    </div>
+    </div>  
 
-  
+  <div class="field">
+      <%= f.label :retencion, "Retencion ", :class => "bold" %><br />
+      <%= f.number_field :retencion ,:step => :any %> 
+    </div>
     <%= hr() %>
 
 

@@ -106,19 +106,19 @@
        
  
 <p>
-  <input value="$0.00" readonly="readonly" type="text" name="total" />
+  <input value="$0.00" readonly="readonly" type="text" name="total"  />
 
 </p>
 
 
-
+  <table id="product-items" > 
+        <tbody>
  <%= form_tag  edit_multiple_customer_payments_path(id: @customer_payment.id), method: :post  do %>
 
 
       <% for item in @detalleitems %>
 
-      <table> 
-        <tbody>
+    
 
        <tr>
           <td class="small bordered_bottom bordered_right" style="width: 50px;">
@@ -187,26 +187,43 @@
                 <% rating_id = item.id  %>
                 <% course = [] %>
 
-               <% field_value = course[item.balance.round(2)] %>
-                 <%= text_field_tag("course[#{item.id}]", field_value, value: item.balance.round(2).to_s) %>
+                <% if  @customer_payment.retencion < 0  %>
 
+                    <% field_value = course[item.balance.round(2)] %>
+                    <%= text_field_tag("course[#{item.id}]", field_value, value: item.balance.round(2).to_s) %>
+                 <% else %>
+
+                    <% lnRetencion = item.balance*  (@customer_payment.retencion / 100 )  %>
+                    <% field_value = course[lnRetencion.round(2)] %>
+                    <%= text_field_tag("course[#{item.id}]", field_value, value: lnRetencion.round(2).to_s) %>
+                 
+                 <% end %>
+               </td>
 
          <% end %>
+
+          <% products_ids = [] %>
+
           
                <td class="bordered_right bordered_bottom right">
-            <%= check_box_tag "products_ids[]", item.id  ,checked = false   %> 
+                <%= check_box_tag "products_ids[#{item.id}]", item.id  ,checked = false ,value: false  %> 
 
-          </td>          
+              </td>  
+
+               <td>
+         
+        
+
 
         </tr>
 
 
-    </tbody>
-  </table>
-
 
         <%end%>
 
+
+    </tbody>
+  </table>
 
    <%=  submit_tag "Grabar detalle "%>
 
@@ -244,16 +261,22 @@
 
 <script type="text/javascript"> 
 
-$('#check_all').change(function() {
-  var is_checked = this.checked;
-  $('.selectable-checkbox').each(function() {
-    this.checked = is_checked;
-  });
-});
+
+$(document).ready(function()
+      {  
+        $('input[type="checkbox"]').change(function()
+      {
+               var total=0;
+        $(this).parents("tr").children("td").
+          find('input[type=checkbox]:checked').each(function(){ 
+                total +=parseInt($(this).val());
+        $(this).parents('tr').find('input[type=text]:last').val(total);
+      });
+      });
+      });
 
 
 function totalIt {
-
   
   var input = document.getElementsByName("product");
   var total = 0;

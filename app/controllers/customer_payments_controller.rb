@@ -497,6 +497,8 @@ class CustomerPaymentsController < ApplicationController
 
 
 
+    @customerpayment[:retencion] = 4.00 
+
     @ac_user = getUsername()
     @customerpayment[:user_id] = getUserId()
     @customerpayment[:fecha1] = Date.today 
@@ -3152,7 +3154,7 @@ end
   def customerpayment_params
     params.require(:customer_payment).permit(:company_id,:location_id,:division_id,:bank_acount_id,
       :document_id,:documento,:customer_id,:tm,:total,:fecha1,:fecha2,:nrooperacion,:operacion,
-      :descrip,:comments,:user_id,:processed,:code,:concept_id,:tipo_cambio,:importe_cambio )
+      :descrip,:comments,:user_id,:processed,:code,:concept_id,:tipo_cambio,:importe_cambio,:retencion )
 
   end
 

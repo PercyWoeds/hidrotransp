@@ -61,6 +61,10 @@
   <%=  @customerpayment.get_moneda(@customerpayment.bank_acount.moneda_id)   %>
 </p>
 
+<b>Retencion : </b>  
+  <%=  @customerpayment.retencion   %>
+</p>
+
 
 <%= hr() %>
 
@@ -175,6 +179,7 @@
         <td class="bordered_bottom bordered_right">
           <%= money(productItem.total) %>
         </td>
+          
 
       </tr>
     <% end %> 
