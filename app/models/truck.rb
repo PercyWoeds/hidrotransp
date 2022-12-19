@@ -3,11 +3,15 @@ class Truck < ActiveRecord::Base
 validates_uniqueness_of :placa 
 
 belongs_to :varillaje 
-belongs_to :sheet_route 
+belongs_to :sheet_route
+
+
 
 has_many :outputs
+has_many :abastes
 
-  def get_marcas()
+
+ def get_marcas()
    @marcas = Marca.all
     
     return @marcas

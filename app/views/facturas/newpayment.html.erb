@@ -187,7 +187,7 @@
                 <% rating_id = item.id  %>
                 <% course = [] %>
 
-                <% if  @customer_payment.retencion < 0  %>
+                <% if  @customer_payment.retencion <= 0  %>
 
                     <% field_value = course[item.balance.round(2)] %>
                     <%= text_field_tag("course[#{item.id}]", field_value, value: item.balance.round(2).to_s) %>
@@ -206,7 +206,7 @@
 
           
                <td class="bordered_right bordered_bottom right">
-                <%= check_box_tag "products_ids[#{item.id}]", item.id  ,checked = false ,value: false  %> 
+                <%= check_box_tag "products_ids[]", item.id  %> 
 
               </td>  
 

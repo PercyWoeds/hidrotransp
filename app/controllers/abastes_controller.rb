@@ -4,7 +4,7 @@ class AbastesController < ApplicationController
   # GET /abastes
   # GET /abastes.json
   def index
-    @abastes = Abaste.all
+    @abastes = Abaste.order(:fecha)
   end
 
   # GET /abastes/1

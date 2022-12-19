@@ -20,6 +20,7 @@ class Employee < ActiveRecord::Base
 	has_many :tirads  
 	has_many :viaticos   
     has_many :sheet_route_details    
+    has_many :abastes
     
 	
     validates_uniqueness_of :idnumber,:cod_emp

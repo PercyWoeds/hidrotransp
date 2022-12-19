@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>Code</th>
+    
       <th>Fecha</th>
       <th>Customer</th>
       <th>Vehiculo</th>
@@ -22,17 +22,17 @@
   <tbody>
     <% @abastes.each do |abaste| %>
       <tr>
-        <td><%= abaste.code %></td>
-        <td><%= abaste.fecha %></td>
-        <td><%= abaste.customer_id %></td>
-        <td><%= abaste.truck_id %></td>
-        <td><%= abaste.employee_id %></td>
+
+        <td><%= abaste.fecha.strftime("%d/%m/%Y") %></td>
+        <td><%= abaste.customer.name  %></td>
+        <td><%= abaste.truck.placa  %></td>
+        <td><%= abaste.employee.full_name %></td>
         <td><%= abaste.km %></td>
         <td><%= abaste.qty %></td>
         <td><%= abaste.horometro %></td>
         <td><%= abaste.comments %></td>
         <td><%= abaste.user_id %></td>
-        <td><%= link_to 'Show', abaste %></td>
+        <td><%= link_to 'Ver', abaste %></td>
         <td><%= link_to 'Edit', edit_abaste_path(abaste) %></td>
           <% if @current_user.level == "admin" %>
         <td><%= link_to 'Destroy', abaste, method: :delete, data: { confirm: 'Are you sure?' } %></td>
