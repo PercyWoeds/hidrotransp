@@ -422,10 +422,10 @@ class CustomerPaymentsController < ApplicationController
         if(params[:search] and params[:search] != "")
           
 
-          @customerpayments = CustomerPayment.where([" code iLIKE ?","%#{params[:search]}%"]).order("fecha1  DESC").paginate(:page => params[:page])
+          @customerpayments = CustomerPayment.where([" code iLIKE ?","%#{params[:search]}%"]).order("fecha1  DESC, code ").paginate(:page => params[:page])
         else
 
-          @customerpayments = CustomerPayment.where(company_id:  @company.id).order("fecha1 DESC").paginate(:page => params[:page])
+          @customerpayments = CustomerPayment.where(company_id:  @company.id).order("fecha1 DESC,code ").paginate(:page => params[:page])
          #@customerpayments = CustomerPayment.find_by_sql("Select * from Customer_Payments ")
           respond_to do |format|
               format.html
