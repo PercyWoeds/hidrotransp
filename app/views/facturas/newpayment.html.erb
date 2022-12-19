@@ -194,8 +194,10 @@
                  <% else %>
 
                     <% lnRetencion = item.balance*  (@customer_payment.retencion / 100 )  %>
-                    <% field_value = course[lnRetencion.round(2)] %>
-                    <%= text_field_tag("course[#{item.id}]", field_value, value: lnRetencion.round(2).to_s) %>
+                    <% lnRetencion2 =  item.balance - lnRetencion   %>
+                    
+                    <% field_value = course[lnRetencion2.round(2)] %>
+                    <%= text_field_tag("course[#{item.id}]", field_value, value: lnRetencion2.round(2).to_s) %>
                  
                  <% end %>
                </td>
