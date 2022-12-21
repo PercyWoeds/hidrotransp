@@ -497,11 +497,15 @@ class CustomerPaymentsController < ApplicationController
 
 
 
-    @customerpayment[:retencion] = 4.00 
+    @customerpayment[:retencion] = 3.00 
+    @customerpayment[:tipo_cambio] = 1.00 
+     @customerpayment[:total] = 0.00 
 
     @ac_user = getUsername()
     @customerpayment[:user_id] = getUserId()
     @customerpayment[:fecha1] = Date.today 
+
+
     
   end
 
